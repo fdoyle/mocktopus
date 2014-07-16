@@ -24,8 +24,6 @@ public class BaseMockingActivity extends Activity {
                     recreate();
                 }
                 break;
-
-
         }
     }
 }
