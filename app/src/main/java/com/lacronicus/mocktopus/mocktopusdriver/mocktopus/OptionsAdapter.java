@@ -48,6 +48,8 @@ public class OptionsAdapter extends BaseAdapter {
         if(getItemViewType(position) == FlattenedOptions.FlatOptionsItem.TYPE_METHOD) {
             t.setTypeface(null, Typeface.BOLD);
         }
+        t.setPadding(20,20,20,20);
+
         return t;
     }
 
