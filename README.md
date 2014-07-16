@@ -20,6 +20,7 @@ add recursive child limits (if MyObject contains a MyObject, tries to add more f
 generics support
 
 more annotations?
+add way to set list of values to use for annotations (like to say StringImageUrl should use X,Y,and Z instead of its defaults)
 
 
 add some flavors to show how to use next to a "real" api
