@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Created by fdoyle on 7/16/14.
  * represents a flat list of options (for UI purposes) rather than the tree structure Options usually takes
- *
  */
 public class FlattenedOptions {
     public List<FlatOptionsItem> itemList;
@@ -18,7 +17,6 @@ public class FlattenedOptions {
     public FlattenedOptions() {
         itemList = new ArrayList<FlatOptionsItem>();
     }
-
 
 
     public void addMethod(Method m, String endpoint) {
@@ -33,17 +31,23 @@ public class FlattenedOptions {
         itemList.add(new FlatOptionsItem(new MethodFieldItem(m, f, options)));
     }
 
+    public void addCollection(Class clazz, Class genericClass) {
+        itemList.add(new FlatOptionsItem(new CollectionObjectItem(clazz, genericClass)));
+    }
+
 
     public class FlatOptionsItem {
         public static final int TYPE_INVALID = -1;
         public static final int TYPE_METHOD = 0;
         public static final int TYPE_CHILD = 1;
         public static final int TYPE_FIELD = 2;
+        public static final int TYPE_COLLECTION = 3;
 
 
         public MethodItem methodItem;
         public ChildObjectItem childObjectItem;
         public MethodFieldItem methodFieldItem;
+        public CollectionObjectItem collectionObjectItem;
 
         public FlatOptionsItem(MethodItem item) {
             this.methodItem = item;
@@ -57,6 +61,10 @@ public class FlattenedOptions {
             this.childObjectItem = item;
         }
 
+        public FlatOptionsItem(CollectionObjectItem item) {
+            this.collectionObjectItem = item;
+        }
+
         public int getType() {
             if (methodItem != null) {
                 return TYPE_METHOD;
@@ -64,19 +72,23 @@ public class FlattenedOptions {
                 return TYPE_CHILD;
             } else if (methodFieldItem != null) {
                 return TYPE_FIELD;
+            } else if (collectionObjectItem != null) {
+                return TYPE_COLLECTION;
             } else {
                 return TYPE_INVALID;
             }
         }
 
         public String getString() {
-            switch(getType()) {
+            switch (getType()) {
                 case TYPE_METHOD:
                     return methodItem.getString();
                 case TYPE_CHILD:
                     return childObjectItem.getString();
                 case TYPE_FIELD:
                     return methodFieldItem.getString();
+                case TYPE_COLLECTION:
+                    return collectionObjectItem.getString();
                 default:
                     return "invalid";
             }
@@ -111,6 +123,7 @@ public class FlattenedOptions {
             this.field = f;
             this.fieldOptions = options;
         }
+
         public String getString() {
             return "  field | " + field.getName();
         }
@@ -127,8 +140,24 @@ public class FlattenedOptions {
         public ChildObjectItem(Class clazz) {
             this.clazz = clazz;
         }
+
         public String getString() {
             return " class | " + clazz.getSimpleName();
+        }
+    }
+
+    //represents a collection
+    public class CollectionObjectItem {
+        public Class clazz;
+        public Class genericClass;
+
+        public CollectionObjectItem(Class clazz, Class genericClass) {
+            this.clazz = clazz;
+            this.genericClass = genericClass;
+        }
+
+        public String getString() {
+            return " collection | " + clazz.getSimpleName() +" of " + genericClass.getSimpleName() ;
         }
     }
 }

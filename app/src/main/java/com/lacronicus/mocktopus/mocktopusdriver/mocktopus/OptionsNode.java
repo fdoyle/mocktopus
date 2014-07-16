@@ -7,7 +7,9 @@ import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.parser.FieldOptionsLis
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +27,8 @@ public class OptionsNode {
     LogLevel level = LogLevel.FULL;
     int depth;
     public Map<Field, List<Object>> fieldOptions;
-
     public Map<Field, OptionsNode> childOptions;
+    public Map<Field, CollectionOptionsNode> childCollectionOptions;
     Class layerClass;
     Method method;
 
@@ -41,9 +43,10 @@ public class OptionsNode {
         this.layerClass = layerClass;
         fieldOptions = new HashMap<Field, List<Object>>();
         childOptions = new HashMap<Field, OptionsNode>();
+        childCollectionOptions = new HashMap<Field, CollectionOptionsNode>();
 
         this.depth = depth;
-        Field[] fields = layerClass.getDeclaredFields(); //getDeclaredFields? what's different?
+        Field[] fields = layerClass.getDeclaredFields();
         for (int i = 0; i != fields.length; i++) {
             Field field = fields[i];
 
@@ -71,6 +74,13 @@ public class OptionsNode {
                 //todo
             } else if (fieldType.equals(Byte.class)) {
                 //todo
+            } else if (Collection.class.isAssignableFrom(fieldType)) {
+                log("adding field option for Collection");
+                ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
+                Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
+                //Collection collection = (Collection) field.get(response);
+                childCollectionOptions.put(field, new CollectionOptionsNode(method, fieldType, listClass, depth + 1));
+
             } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                 // may need to explicity state what children to add
                 // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
@@ -83,46 +93,35 @@ public class OptionsNode {
 
     }
 
-    public List<String> getFieldNames() {
-        List<String> fieldNames = new ArrayList<String>();
-        for (Field field : fieldOptions.keySet()) {
-            fieldNames.add(field.getName());
-        }
-        return fieldNames;
-    }
 
-
-    //keep a constantly updated version in memory, so you dont have to flatten for each query?
-    public Map<Field, Object> getFlattenedFieldSettings() {
-        HashMap<Field, Object> allFieldSettings = new HashMap<Field, Object>();
-        for (Field f : childOptions.keySet()) {
-            OptionsNode node = childOptions.get(f);
-            allFieldSettings.putAll(node.getFlattenedFieldSettings());
-        }
-        return allFieldSettings;
-    }
 
     public void addToFlattenedOptions(FlattenedOptions flattenedOptions) {
         flattenedOptions.addChildObject(layerClass);
         //add my fields
-        for(Field f : fieldOptions.keySet()) {
+        for (Field f : fieldOptions.keySet()) {
             flattenedOptions.addField(method, f, fieldOptions.get(f));
         }
 
-
         //add child fields
-        for(OptionsNode child : childOptions.values()) {
+        for (OptionsNode child : childOptions.values()) {
             child.addToFlattenedOptions(flattenedOptions);
         }
 
+        //add collection fields
+        for(CollectionOptionsNode collectionNode : childCollectionOptions.values()) {
+            collectionNode.addToFlattenedOptions(flattenedOptions);
+        }
     }
 
     public void addDefaultSettingsTo(FieldSettings toAdd) {
-        for(Field f : fieldOptions.keySet()) {
+        for (Field f : fieldOptions.keySet()) {
             Object firstItem = fieldOptions.get(f).get(0);
             toAdd.put(new Pair<Method, Field>(method, f), firstItem);
         }
-        for(OptionsNode node : childOptions.values()) {
+        for (OptionsNode node : childOptions.values()) {
+            node.addDefaultSettingsTo(toAdd);
+        }
+        for (CollectionOptionsNode node : childCollectionOptions.values()) {
             node.addDefaultSettingsTo(toAdd);
         }
     }

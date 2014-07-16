@@ -5,6 +5,8 @@ import android.util.Pair;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -70,7 +72,16 @@ public class Options {
                     //todo
                 } else if (fieldType.equals(Byte.class)) {
                     //todo
-                } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
+                } else if(Collection.class.isAssignableFrom(fieldType)) {
+                    ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
+                    Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
+                    Collection collection = (Collection) field.get(response);
+                    collection.add(createObject(listClass, method, currentSettings));
+
+                }
+
+
+                else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                     // may need to explicity state what children to add
                     // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
                     // about the fields. hmm...
