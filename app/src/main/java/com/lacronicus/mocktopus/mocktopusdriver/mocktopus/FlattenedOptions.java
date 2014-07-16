@@ -1,7 +1,5 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
-import android.util.Pair;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;

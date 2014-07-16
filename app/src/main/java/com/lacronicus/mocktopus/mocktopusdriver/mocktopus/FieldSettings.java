@@ -10,6 +10,6 @@ import java.util.Map;
 /**
  * Created by fdoyle on 7/16/14.
  */
-public class CurrentSettings extends HashMap<Pair<Method, Field>, Object>{
+public class FieldSettings extends HashMap<Pair<Method, Field>, Object>{
 
 }

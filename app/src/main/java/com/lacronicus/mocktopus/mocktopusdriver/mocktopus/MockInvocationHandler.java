@@ -11,12 +11,12 @@ import java.lang.reflect.Method;
 public class MockInvocationHandler implements InvocationHandler {
 
     Options options;
-    CurrentSettings settings;
+    FieldSettings settings;
 
 
     public MockInvocationHandler(Class api) {
         options = new Options(api);
-        //settings = options.getDefaultSettings();
+        settings = options.getDefaultFieldSettings();
 
         //use api to build options
     }
@@ -36,7 +36,7 @@ public class MockInvocationHandler implements InvocationHandler {
         return options.flatten();
     }
 
-    public CurrentSettings getSettings() {
+    public FieldSettings getSettings() {
         return settings;
     }
 

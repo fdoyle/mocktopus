@@ -1,6 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.parser.FieldOptionsListBuilder;
 
@@ -42,7 +43,7 @@ public class OptionsNode {
         childOptions = new HashMap<Field, OptionsNode>();
 
         this.depth = depth;
-        Field[] fields = layerClass.getFields(); //getDeclaredFields? what's different?
+        Field[] fields = layerClass.getDeclaredFields(); //getDeclaredFields? what's different?
         for (int i = 0; i != fields.length; i++) {
             Field field = fields[i];
 
@@ -111,6 +112,16 @@ public class OptionsNode {
 
         //add child fields
 
+    }
+
+    public void addDefaultSettingsTo(FieldSettings toAdd) {
+        for(Field f : fieldOptions.keySet()) {
+            Object firstItem = fieldOptions.get(f).get(0);
+            toAdd.put(new Pair<Method, Field>(method, f), firstItem);
+        }
+        for(OptionsNode node : childOptions.values()) {
+            node.addDefaultSettingsTo(toAdd);
+        }
     }
 
     private void log(String statement) {

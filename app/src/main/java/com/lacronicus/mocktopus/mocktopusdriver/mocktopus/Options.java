@@ -101,8 +101,6 @@ public class Options {
         for(Method method : methodSet) {
             //add method to flattenedOptions
             flattenedOptions.addMethod(method, method.getName()); //todo change to endpoint name
-                                                                  // todo determine whether having the endpoint is even a good idea
-                                                                  //if method name is descriptive, you shouldn't need it
             //add fields to flattenedOptions
             methodOptions.get(method).addToFlattenedOptions(flattenedOptions);
         }
@@ -111,11 +109,15 @@ public class Options {
         return flattenedOptions;
     }
 
-    /**
-     * map of classes fields to their available choices
-     * <p/>
-     * child objects get their own OptionsNode
-     */
+
+    public FieldSettings getDefaultFieldSettings() {
+        FieldSettings settings = new FieldSettings();
+        for(OptionsNode node : methodOptions.values()) {
+            node.addDefaultSettingsTo(settings);
+        }
+        return settings;
+    }
+
 
 
     private void log(String statement) {
