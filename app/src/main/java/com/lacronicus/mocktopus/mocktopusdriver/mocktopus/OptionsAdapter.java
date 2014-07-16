@@ -17,7 +17,6 @@ public class OptionsAdapter extends BaseAdapter {
 
     public OptionsAdapter(Context c) {
         this.c = c;
-
     }
 
     public void setContent(FlattenedOptions options) {

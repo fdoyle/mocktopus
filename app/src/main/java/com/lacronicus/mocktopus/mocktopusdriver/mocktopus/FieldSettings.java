@@ -12,4 +12,5 @@ import java.util.Map;
  */
 public class FieldSettings extends HashMap<Pair<Method, Field>, Object>{
 
+
 }
