@@ -46,6 +46,7 @@ public class Options {
 
 
     public <T> T createResponse(Method method, Class<T> returnClass) { // how should exceptions be handled here?
+        //where to handle methods that return observables/use callbacks
         OptionsNode node = methodOptions.get(method);
         return createObject(returnClass, node.getFlattenedFieldSettings());
     }
