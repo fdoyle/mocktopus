@@ -45,14 +45,14 @@ public class MainActivity extends Activity {
                         toast("child");
                         break;
                     case FlattenedOptions.FlatOptionsItem.TYPE_FIELD:
-                        toast("default - " + mocktopus.getHandler().getSettings().get(item.methodFieldItem.getPair()).toString());
+                        toast("currently:\n\"" + mocktopus.getHandler().getSettings().get(item.methodFieldItem.getPair()).toString() + "\"");
 
                 }
             }
         });
 
 
-        Log.d("TAG","Result of interface call: " + myService.doStuff().myString);
+        Log.d("TAG","myService.returnMyModel().myString = " + myService.returnMyModel().myString);
     }
 
 

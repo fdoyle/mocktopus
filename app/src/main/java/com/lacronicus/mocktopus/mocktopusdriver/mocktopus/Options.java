@@ -1,6 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.util.Log;
+import android.util.Pair;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -43,14 +44,9 @@ public class Options {
     }
 
 
-    public <T> T createResponse(Method method, Class<T> returnClass) { // how should exceptions be handled here?
-        //where to handle methods that return observables/use callbacks
-        OptionsNode node = methodOptions.get(method);
-        return createObject(returnClass, node.getFlattenedFieldSettings());
-    }
-
     //call this recursively
-    public <T> T createObject(Class<T> returnClass, Map<Field, Object> fieldSettings) {
+    public <T> T createObject(Class<T> returnClass, Method method, FieldSettings currentSettings) {
+        log("creating a new object");
         try {
             T response = returnClass.newInstance();
             Field[] fields = returnClass.getDeclaredFields(); // todo add support for super classes here
@@ -58,8 +54,8 @@ public class Options {
                 Field field = fields[i];
                 Class fieldType = field.getType();
                 if (fieldType.equals(String.class)) {
-                    log("loading " + fieldSettings.get(field) + " into " + field.getName());
-                    field.set(response, fieldSettings.get(field));
+                    log("loading " + currentSettings.get(new Pair<Method, Field>(method, field)) + " into " + field.getName());
+                    field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                 } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
                     //todo
                 } else if (fieldType.equals(Long.class)) {
@@ -80,18 +76,26 @@ public class Options {
                     // about the fields. hmm...
 
                     log("loading new object into " + field.getName());
-                    field.set(response, createObject(fieldType, fieldSettings));
+                    field.set(response, createObject(fieldType, method, currentSettings));
 
                 }
             }
 
-
+            if(response == null) {
+                log("response is null");
+            } else {
+                log("response is not null");
+            }
             return response;
         } catch (InstantiationException e) {
+            log("error");
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            log("error");
             e.printStackTrace();
         }
+
+        log("failed to create object, returning null");
         return null;
     }
 

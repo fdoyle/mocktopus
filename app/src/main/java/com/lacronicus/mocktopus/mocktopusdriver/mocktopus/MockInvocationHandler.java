@@ -2,6 +2,8 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.util.Log;
 
+import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyModel;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -25,7 +27,9 @@ public class MockInvocationHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //ignore args, proxy is "dumb"
         Log.d("TAG", "invoking some stuff");
-        return options.createResponse(method, method.getReturnType());
+        MyModel model = (MyModel) options.createObject(method.getReturnType(),method,settings);
+        Log.d("TAG", "returning " + model.myString);
+        return model;
     }
 
     public Options getOptions() {
