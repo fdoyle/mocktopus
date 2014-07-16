@@ -5,4 +5,5 @@ package com.lacronicus.mocktopus.mocktopusdriver.service.model;
  */
 public class MyModel {
     public String myString;
+    public String myString2;
 }

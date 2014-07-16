@@ -8,4 +8,6 @@ import android.app.Notification;
  * Allows the user to modify the current settings for an api
  */
 public class ConfigurationActivity extends Activity {
+
+    //todo inject options;
 }

@@ -6,13 +6,23 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
- * Created by fdoyle on 7/10/14.
+ * Created by fdoyle on 7/16/14.
  */
-public class TemporaryMockApiBuilder {
+public class Mocktopus {
 
-    public TemporaryMockApiBuilder() {
+    public ApiService service;
+    public MockInvocationHandler handler;
 
+    public Mocktopus(Class api) {
+        handler = new MockInvocationHandler(api);
+
+        service = (ApiService) Proxy.newProxyInstance(
+                ApiService.class.getClassLoader(),
+                new Class[]{api}, // is this right?
+                handler
+        );
     }
+
 
     //this one should work as well, and be more flexible, but let's hold off on it until the rest works?
     /*public <T> T build(Class<T> api) {
@@ -26,20 +36,19 @@ public class TemporaryMockApiBuilder {
         return service;
     }*/
 
-    public ApiService build(Class api) {
-        InvocationHandler apiHandler = new MockInvocationHandler(api);
+    public Mocktopus build() {
+        //finalize object
+        return this;
+    }
 
-        ApiService service = (ApiService) Proxy.newProxyInstance(
-                ApiService.class.getClassLoader(),
-                new Class[]{api}, // is this right?
-                apiHandler
-        );
+    public MockInvocationHandler getHandler() {
+        return handler;
+    }
+
+    public ApiService getService() {
         return service;
     }
 
-    /**
-     * add a global error state. these are used as alternatives to "success" responses
-     */
     public void addErrorState(String stateName, Class toReturn) {
         //stub
     }

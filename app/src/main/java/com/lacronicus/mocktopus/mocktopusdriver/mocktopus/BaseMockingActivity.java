@@ -10,6 +10,8 @@ public class BaseMockingActivity extends Activity {
     public static final int CONFIG_REQUEST_CODE = -1000001;
 
 
+
+
     public void showConfigScreen() {
         Intent i = new Intent(this, ConfigurationActivity.class);
         startActivityForResult(i, CONFIG_REQUEST_CODE);
@@ -20,7 +22,7 @@ public class BaseMockingActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CONFIG_REQUEST_CODE:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     recreate();
                 }
                 break;

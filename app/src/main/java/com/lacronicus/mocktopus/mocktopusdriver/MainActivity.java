@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.TemporaryMockApiBuilder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.Mocktopus;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.OptionsAdapter;
 import com.lacronicus.mocktopus.mocktopusdriver.service.ApiService;
 
 
@@ -18,7 +20,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myService = new TemporaryMockApiBuilder().build(ApiService.class);
+        Mocktopus mocktopus = new Mocktopus(ApiService.class);
+        myService = mocktopus.getService();
+
+        OptionsAdapter adapter = new OptionsAdapter(this);
+        adapter.setContent(mocktopus.getHandler().getFlattenedOptions());
+        ListView lv = (ListView) findViewById(R.id.lv);
+        lv.setAdapter(adapter);
+
+
         Log.d("TAG","Result of interface call: " + myService.doStuff().myString);
     }
 

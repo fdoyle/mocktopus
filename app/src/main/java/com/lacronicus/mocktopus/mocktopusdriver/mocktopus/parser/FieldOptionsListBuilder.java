@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class FieldOptionsListBuilder {
 
-    public List<String> getOptionsForStringField(Field field) {
+    public List<Object> getOptionsForStringField(Field field) {
         //todo parse some annotations to see if we should do something else
 
-        return Arrays.asList("hello", "hello\nhello\nhello\n", null);
+        return Arrays.asList((Object) "hello", "hello\nhello\nhello\n", null);
     }
 
 

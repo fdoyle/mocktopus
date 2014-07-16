@@ -2,8 +2,6 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.util.Log;
 
-import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyModel;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -13,10 +11,13 @@ import java.lang.reflect.Method;
 public class MockInvocationHandler implements InvocationHandler {
 
     Options options;
+    CurrentSettings settings;
 
 
     public MockInvocationHandler(Class api) {
         options = new Options(api);
+        //settings = options.getDefaultSettings();
+
         //use api to build options
     }
 
@@ -26,4 +27,18 @@ public class MockInvocationHandler implements InvocationHandler {
         Log.d("TAG", "invoking some stuff");
         return options.createResponse(method, method.getReturnType());
     }
+
+    public Options getOptions() {
+        return options;
+    }
+
+    public FlattenedOptions getFlattenedOptions() {
+        return options.flatten();
+    }
+
+    public CurrentSettings getSettings() {
+        return settings;
+    }
+
+
 }
