@@ -7,5 +7,6 @@ import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyModel;
  */
 public interface ApiService {
     public MyModel returnMyModel();
-    //public MyModel returnMyModel2();
+    public MyModel returnMyModel2();
+    public MyModel returnMyModel3();
 }

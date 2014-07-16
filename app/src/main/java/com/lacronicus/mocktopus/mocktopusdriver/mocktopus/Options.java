@@ -80,22 +80,13 @@ public class Options {
 
                 }
             }
-
-            if(response == null) {
-                log("response is null");
-            } else {
-                log("response is not null");
-            }
             return response;
         } catch (InstantiationException e) {
-            log("error");
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            log("error");
             e.printStackTrace();
         }
 
-        log("failed to create object, returning null");
         return null;
     }
 

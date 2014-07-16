@@ -25,10 +25,7 @@ public class MockInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        //ignore args, proxy is "dumb"
-        Log.d("TAG", "invoking some stuff");
         MyModel model = (MyModel) options.createObject(method.getReturnType(),method,settings);
-        Log.d("TAG", "returning " + model.myString);
         return model;
     }
 
