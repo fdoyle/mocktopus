@@ -1,6 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -31,7 +32,7 @@ public class OptionsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public FlattenedOptions.FlatOptionsItem getItem(int position) {
         return options.itemList.get(position);
     }
 
@@ -44,16 +45,19 @@ public class OptionsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView t = new TextView(c);
         t.setText(options.itemList.get(position).getString());
+        if(getItemViewType(position) == FlattenedOptions.FlatOptionsItem.TYPE_METHOD) {
+            t.setTypeface(null, Typeface.BOLD);
+        }
         return t;
     }
 
     @Override
     public int getViewTypeCount() {
-        return super.getViewTypeCount();
+        return 3;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return 4;
+        return getItem(position).getType();
     }
 }

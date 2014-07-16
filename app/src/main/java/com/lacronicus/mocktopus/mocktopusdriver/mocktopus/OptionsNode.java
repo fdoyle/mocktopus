@@ -52,7 +52,7 @@ public class OptionsNode {
 
                 List<Object> optionsList = new FieldOptionsListBuilder().getOptionsForStringField(field); //keep a ref to this?
 
-                log("adding field option for " + field.getName());
+                log("adding field option for String " + field.getName());
                 fieldOptions.put(field, optionsList);
                 log("setting default for " + field.getName() + " to " + optionsList.get(0)); //clean up some
 
@@ -76,7 +76,7 @@ public class OptionsNode {
                 // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
                 // about the fields. hmm...
                 childOptions.put(field, new OptionsNode(method, fieldType, depth + 1));
-                log("adding field option for " + field.getName());
+                log("adding field option for child Object" + field.getName());
             }
 
         }
@@ -111,6 +111,9 @@ public class OptionsNode {
 
 
         //add child fields
+        for(OptionsNode child : childOptions.values()) {
+            child.addToFlattenedOptions(flattenedOptions);
+        }
 
     }
 
