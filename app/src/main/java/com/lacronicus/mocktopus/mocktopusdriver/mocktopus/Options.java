@@ -106,7 +106,9 @@ public class Options {
      */
     public class OptionsNode {
         int depth;
-        public Map<Field, List<String>> stringFieldOptions;
+        public Map<Field, List<String>> stringFieldOptions; // todo any reason this can't have a List<Object>?
+                                                            // then we dont have to have a separate one for each type
+                                                            // might even be able to combine with objectFieldOptions
         public Map<Field, Object> fieldSettings;
         //todo add more field types eg int, long, etc
 
