@@ -36,7 +36,12 @@ public class Options {
             Class returnClass = method.getReturnType();
             if(Collection.class.isAssignableFrom(returnClass)){ // todo might be a List<Object> or might be something that extends List<Object>
                 log("return type is collection");
-                ParameterizedType methodReturnClass = (ParameterizedType) method.getGenericReturnType();
+
+                ParameterizedType methodReturnClass = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
+
+                //ParameterizedType methodReturnClass = (ParameterizedType) method.getReturnType().getGenericSuperclass();//works on things that extend List<Object>
+
+                // todo resolve this
                 Class<?> listType =  (Class<?>) methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
                 methodOptions.put(method, new CollectionOptionsNode(method, methodReturnClass, listType, 0));
             } else {

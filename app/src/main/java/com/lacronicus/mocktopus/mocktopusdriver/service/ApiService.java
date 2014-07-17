@@ -4,6 +4,7 @@ import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyCollectionContai
 import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyCollectionExtendingModel;
 import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ import java.util.List;
 public interface ApiService {
     public MyModel returnMyModel();
     public MyCollectionContainingModel returnMyCollectionContainingModel();
-    //public MyCollectionExtendingModel returnMyCollectionExtendingModel(); //todo this one won't work
+    //public MyCollectionExtendingModel returnMyCollectionExtendingModel(); //todo fix this one
     public List<MyModel> returnMyModelList();
+    public ArrayList<MyModel> returnMyModelArrayList();
 }

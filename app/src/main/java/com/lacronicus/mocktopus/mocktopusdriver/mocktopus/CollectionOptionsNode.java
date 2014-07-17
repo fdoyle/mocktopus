@@ -11,18 +11,18 @@ import java.lang.reflect.Type;
 public class CollectionOptionsNode implements IOptionsNode{
 
     SingleObjectOptionsNode node; // single options node representing all the contents of the associated collection
-    Type clazz;
-    Class genericClass;
+    Type containerType;
+    Class containedClass;
 
-    public CollectionOptionsNode(Method m, Type clazz, Class genericClass, int depth) {
-        node = new SingleObjectOptionsNode(m, genericClass, depth + 1);
-        this.genericClass = genericClass;
-        this.clazz = clazz;
+    public CollectionOptionsNode(Method m, Type ContainerType, Class containedClass, int depth) {
+        node = new SingleObjectOptionsNode(m, containedClass, depth + 1);
+        this.containedClass = containedClass;
+        this.containerType = ContainerType;
     }
 
 
     public void addToFlattenedOptions(FlattenedOptions flattenedOptions) {
-        flattenedOptions.addCollection(clazz, genericClass);
+        flattenedOptions.addCollection(containerType, containedClass);
         node.addToFlattenedOptions(flattenedOptions);
     }
 
