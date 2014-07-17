@@ -1,4 +1,4 @@
-package com.lacronicus.mocktopus.mocktopusdriver.service.model;
+package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
 
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringDate;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringFixed;

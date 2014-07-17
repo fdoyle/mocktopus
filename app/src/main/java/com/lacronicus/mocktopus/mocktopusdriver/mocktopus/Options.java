@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class Options {
             Method method = methods[i];
             log("creating new base OptionsNode for method " + method.getName());
             Class returnClass = method.getReturnType();
-            if(Collection.class.isAssignableFrom(returnClass)){ // todo might be a List<Object> or might be something that extends List<Object>
+            if (Collection.class.isAssignableFrom(returnClass)) { // todo might be a List<Object> or might be something that extends List<Object>
                 log("return type is collection");
 
                 ParameterizedType methodReturnClass = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
@@ -42,7 +43,7 @@ public class Options {
                 //ParameterizedType methodReturnClass = (ParameterizedType) method.getReturnType().getGenericSuperclass();//works on things that extend List<Object>
 
                 // todo resolve this
-                Class<?> listType =  (Class<?>) methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
+                Class<?> listType = (Class<?>) methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
                 methodOptions.put(method, new CollectionOptionsNode(method, methodReturnClass, listType, 0));
             } else {
                 methodOptions.put(method, new SingleObjectOptionsNode(method, returnClass, 0));
@@ -59,45 +60,55 @@ public class Options {
     public <T> T createObject(Class<T> returnClass, Method method, FieldSettings currentSettings) {
         log("creating a new object");
         try {
-            T response = returnClass.newInstance();
-            Field[] fields = returnClass.getDeclaredFields(); // todo add support for super classes here
-            for (int i = 0; i != fields.length; i++) {
-                Field field = fields[i];
-                Class fieldType = field.getType();
-                if (fieldType.equals(String.class)) {
-                    log("loading " + currentSettings.get(new Pair<Method, Field>(method, field)) + " into " + field.getName());
-                    field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
-                } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
-                    //todo
-                } else if (fieldType.equals(Long.class)) {
-                    //todo
-                } else if (fieldType.equals(Double.class)) {
-                    //todo
-                } else if (fieldType.equals(Float.class)) {
-                    //todo
-                } else if (fieldType.equals(Character.class)) {
-                    //todo
-                } else if (fieldType.equals(Short.class)) {
-                    //todo
-                } else if (fieldType.equals(Byte.class)) {
-                    //todo
-                } else if (Collection.class.isAssignableFrom(fieldType)) {
-                    ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
-                    Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
-                    Collection collection = (Collection) field.get(response);
-                    collection.add(createObject(listClass, method, currentSettings));
+            //if this new thing is a collection, make a collection and add children
 
-                } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
-                    // may need to explicity state what children to add
-                    // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
-                    // about the fields. hmm...
+            //if it's a "plain" object, make it and fill in its fields
 
-                    log("loading new object into " + field.getName());
-                    field.set(response, createObject(fieldType, method, currentSettings));
 
+            if (Collection.class.isAssignableFrom(returnClass)) {
+                T retValue = returnClass.newInstance();
+                Collection collection = (Collection) retValue;
+                Type containedClass = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+
+                collection.add(createObject((Class<T>)containedClass, method, currentSettings));
+
+                return retValue;
+            } else {
+                T response = returnClass.newInstance();
+                Field[] fields = returnClass.getDeclaredFields(); // todo add support for super classes here
+
+                for (int i = 0; i != fields.length; i++) {
+                    Field field = fields[i];
+                    Class fieldType = field.getType();
+                    if (fieldType.equals(String.class)) {
+                        log("loading " + currentSettings.get(new Pair<Method, Field>(method, field)) + " into " + field.getName());
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
+                        //todo
+                    } else if (fieldType.equals(Long.class)) {
+                        //todo
+                    } else if (fieldType.equals(Double.class)) {
+                        //todo
+                    } else if (fieldType.equals(Float.class)) {
+                        //todo
+                    } else if (fieldType.equals(Character.class)) {
+                        //todo
+                    } else if (fieldType.equals(Short.class)) {
+                        //todo
+                    } else if (fieldType.equals(Byte.class)) {
+                        //todo
+                    } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
+                        // may need to explicity state what children to add
+                        // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
+                        // about the fields. hmm...
+
+                        log("loading new object into " + field.getName());
+                        field.set(response, createObject(fieldType, method, currentSettings));
+
+                    }
                 }
+                return response;
             }
-            return response;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

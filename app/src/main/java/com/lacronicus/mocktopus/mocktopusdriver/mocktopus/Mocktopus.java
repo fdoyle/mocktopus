@@ -1,8 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
-import com.lacronicus.mocktopus.mocktopusdriver.service.ApiService;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.ApiService;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**

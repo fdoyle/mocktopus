@@ -1,4 +1,4 @@
-package com.lacronicus.mocktopus.mocktopusdriver.service.model;
+package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
 
 import java.util.List;
 

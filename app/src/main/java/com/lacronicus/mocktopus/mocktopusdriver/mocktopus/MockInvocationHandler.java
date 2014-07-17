@@ -1,8 +1,6 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
-import android.util.Log;
-
-import com.lacronicus.mocktopus.mocktopusdriver.service.model.MyModel;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -27,8 +25,7 @@ public class MockInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        MyModel model = (MyModel) options.createObject(method.getReturnType(),method,settings);
-        return model;
+        return options.createObject(method.getReturnType(), method, settings);
     }
 
     public Options getOptions() {

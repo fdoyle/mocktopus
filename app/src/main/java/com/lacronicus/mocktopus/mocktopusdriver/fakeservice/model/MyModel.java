@@ -1,4 +1,4 @@
-package com.lacronicus.mocktopus.mocktopusdriver.service.model;
+package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
 
 /**
  * Created by fdoyle on 7/14/14.
