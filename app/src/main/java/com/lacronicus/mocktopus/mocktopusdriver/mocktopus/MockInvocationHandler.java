@@ -23,6 +23,8 @@ public class MockInvocationHandler implements InvocationHandler {
         //use api to build options
     }
 
+
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         MyModel model = (MyModel) options.createObject(method.getReturnType(),method,settings);

@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
         });
 
 
-        Log.d("TAG","myService.returnMyModel().myString = " + myService.returnMyModel().myString);
+        //Log.d("TAG","myService.returnMyModel().myString = " + myService.returnMyModel().myString);
     }
 
     public void toast(String string) {

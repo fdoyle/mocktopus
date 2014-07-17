@@ -6,6 +6,7 @@ import android.util.Pair;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,12 +14,7 @@ import java.util.Set;
 
 /**
  * Created by fdoyle on 7/10/14.
- * keeps track of available options for field/method pairs
- * as well as the currently selected option
- * <p/>
- * <p/>
- * <p/>
- * only supports strings in first release
+ * Represents the options for entire interface
  */
 public class Options {
     enum LogLevel {
@@ -26,18 +22,26 @@ public class Options {
         NONE
     }
 
-    Map<Method, OptionsNode> methodOptions;
+    Map<Method, IOptionsNode> methodOptions;
     LogLevel level = LogLevel.FULL;
 
     public Options(Class classToBuild) {
-        methodOptions = new HashMap<Method, OptionsNode>();
+        methodOptions = new HashMap<Method, IOptionsNode>();
 
         Method[] methods = classToBuild.getMethods();
         for (int i = 0; i != methods.length; i++) {
+
             Method method = methods[i];
-            Class methodReturnClass = method.getReturnType();
             log("creating new base OptionsNode for method " + method.getName());
-            methodOptions.put(method, new OptionsNode(method, methodReturnClass, 0));
+            Class returnClass = method.getReturnType();
+            if(Collection.class.isAssignableFrom(returnClass)){ // todo might be a List<Object> or might be something that extends List<Object>
+                log("return type is collection");
+                ParameterizedType methodReturnClass = (ParameterizedType) method.getGenericReturnType();
+                Class<?> listType =  (Class<?>) methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
+                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnClass, listType, 0));
+            } else {
+                methodOptions.put(method, new SingleObjectOptionsNode(method, returnClass, 0));
+            }
         }
     }
 
@@ -72,16 +76,13 @@ public class Options {
                     //todo
                 } else if (fieldType.equals(Byte.class)) {
                     //todo
-                } else if(Collection.class.isAssignableFrom(fieldType)) {
+                } else if (Collection.class.isAssignableFrom(fieldType)) {
                     ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
                     Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
                     Collection collection = (Collection) field.get(response);
                     collection.add(createObject(listClass, method, currentSettings));
 
-                }
-
-
-                else { // best way to determine child classes? what if it contains an Activity for some awful reason?
+                } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                     // may need to explicity state what children to add
                     // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
                     // about the fields. hmm...
@@ -103,8 +104,8 @@ public class Options {
 
     public FlattenedOptions flatten() {
         FlattenedOptions flattenedOptions = new FlattenedOptions();
-       Set<Method> methodSet =  methodOptions.keySet();
-        for(Method method : methodSet) {
+        Set<Method> methodSet = methodOptions.keySet();
+        for (Method method : methodSet) {
             //add method to flattenedOptions
             flattenedOptions.addMethod(method, method.getName()); //todo change to endpoint name
             //add fields to flattenedOptions
@@ -118,12 +119,11 @@ public class Options {
 
     public FieldSettings getDefaultFieldSettings() {
         FieldSettings settings = new FieldSettings();
-        for(OptionsNode node : methodOptions.values()) {
+        for (IOptionsNode node : methodOptions.values()) {
             node.addDefaultSettingsTo(settings);
         }
         return settings;
     }
-
 
 
     private void log(String statement) {

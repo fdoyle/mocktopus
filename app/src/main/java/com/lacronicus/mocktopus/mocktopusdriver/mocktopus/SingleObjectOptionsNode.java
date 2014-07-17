@@ -8,7 +8,7 @@ import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.parser.FieldOptionsLis
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by fdoyle on 7/16/14.
  */
-public class OptionsNode {
+public class SingleObjectOptionsNode implements IOptionsNode{
 
     enum LogLevel {
         FULL,
@@ -27,7 +27,7 @@ public class OptionsNode {
     LogLevel level = LogLevel.FULL;
     int depth;
     public Map<Field, List<Object>> fieldOptions;
-    public Map<Field, OptionsNode> childOptions;
+    public Map<Field, SingleObjectOptionsNode> childOptions;
     public Map<Field, CollectionOptionsNode> childCollectionOptions;
     Class layerClass;
     Method method;
@@ -37,12 +37,12 @@ public class OptionsNode {
      * @param layerClass the class this layer represents
      * @param depth      distance to "root" OptionsNode
      */
-    public OptionsNode(Method m, Class layerClass, int depth) {
+    public SingleObjectOptionsNode(Method m, Class layerClass, int depth) {
         log("new OptionsNode");
         this.method = m;
         this.layerClass = layerClass;
         fieldOptions = new HashMap<Field, List<Object>>();
-        childOptions = new HashMap<Field, OptionsNode>();
+        childOptions = new HashMap<Field, SingleObjectOptionsNode>();
         childCollectionOptions = new HashMap<Field, CollectionOptionsNode>();
 
         this.depth = depth;
@@ -51,6 +51,7 @@ public class OptionsNode {
             Field field = fields[i];
 
             Class fieldType = field.getType();
+
             if (fieldType.equals(String.class)) {
 
                 List<Object> optionsList = new FieldOptionsListBuilder().getOptionsForStringField(field); //keep a ref to this?
@@ -82,10 +83,7 @@ public class OptionsNode {
                 childCollectionOptions.put(field, new CollectionOptionsNode(method, fieldType, listClass, depth + 1));
 
             } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
-                // may need to explicity state what children to add
-                // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
-                // about the fields. hmm...
-                childOptions.put(field, new OptionsNode(method, fieldType, depth + 1));
+                childOptions.put(field, new SingleObjectOptionsNode(method, fieldType, depth + 1));
                 log("adding field option for child Object" + field.getName());
             }
 
@@ -103,7 +101,7 @@ public class OptionsNode {
         }
 
         //add child fields
-        for (OptionsNode child : childOptions.values()) {
+        for (SingleObjectOptionsNode child : childOptions.values()) {
             child.addToFlattenedOptions(flattenedOptions);
         }
 
@@ -118,7 +116,7 @@ public class OptionsNode {
             Object firstItem = fieldOptions.get(f).get(0);
             toAdd.put(new Pair<Method, Field>(method, f), firstItem);
         }
-        for (OptionsNode node : childOptions.values()) {
+        for (SingleObjectOptionsNode node : childOptions.values()) {
             node.addDefaultSettingsTo(toAdd);
         }
         for (CollectionOptionsNode node : childCollectionOptions.values()) {
