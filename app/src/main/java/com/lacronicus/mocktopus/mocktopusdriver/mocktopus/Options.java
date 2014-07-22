@@ -63,13 +63,18 @@ public class Options {
             //if this new thing is a collection, make a collection and add children
 
             //if it's a "plain" object, make it and fill in its fields
+            /*if(Observable.class.isAssignableFrom(returnClass)) {
 
 
-            if (Collection.class.isAssignableFrom(returnClass)) {
+
+
+            } else */if (Collection.class.isAssignableFrom(returnClass)) {
                 T retValue = returnClass.newInstance();
                 Collection collection = (Collection) retValue;
                 Type containedClass = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
-
+                log("adding three items to collection");
+                collection.add(createObject((Class<T>)containedClass, method, currentSettings));
+                collection.add(createObject((Class<T>)containedClass, method, currentSettings));
                 collection.add(createObject((Class<T>)containedClass, method, currentSettings));
 
                 return retValue;

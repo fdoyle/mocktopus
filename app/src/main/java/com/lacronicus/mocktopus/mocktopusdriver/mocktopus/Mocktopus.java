@@ -2,6 +2,7 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.ApiService;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
@@ -15,6 +16,7 @@ public class Mocktopus {
     public Mocktopus(Class api) {
         handler = new MockInvocationHandler(api);
 
+        //todo make this generic
         service = (ApiService) Proxy.newProxyInstance(
                 ApiService.class.getClassLoader(),
                 new Class[]{api}, // is this right?
@@ -25,7 +27,7 @@ public class Mocktopus {
 
     //this one should work as well, and be more flexible, but let's hold off on it until the rest works?
     /*public <T> T build(Class<T> api) {
-        InvocationHandler apiHandler = new MockInvocationHandler();
+        InvocationHandler apiHandler = new MockInvocationHandler(api);
 
         T service = (T) Proxy.newProxyInstance(
                 ApiService.class.getClassLoader(),

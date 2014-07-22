@@ -47,34 +47,31 @@ public class SingleObjectOptionsNode implements IOptionsNode{
 
         this.depth = depth;
         Field[] fields = layerClass.getDeclaredFields();
+        FieldOptionsListBuilder b = new FieldOptionsListBuilder();
         for (int i = 0; i != fields.length; i++) {
             Field field = fields[i];
 
             Class fieldType = field.getType();
 
+
             if (fieldType.equals(String.class)) {
-
-                List<Object> optionsList = new FieldOptionsListBuilder().getOptionsForStringField(field); //keep a ref to this?
-
-                log("adding field option for String " + field.getName());
-                fieldOptions.put(field, optionsList);
-                log("setting default for " + field.getName() + " to " + optionsList.get(0)); //clean up some
-
-
+                fieldOptions.put(field, b.getOptionsForStringField(field));
             } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
-                //todo
+                fieldOptions.put(field, b.getOptionsforIntegerField(field));
             } else if (fieldType.equals(Long.class)) {
                 //todo
             } else if (fieldType.equals(Double.class)) {
-                //todo
+                fieldOptions.put(field, b.getOptionsforDoubleField(field));
             } else if (fieldType.equals(Float.class)) {
-                //todo
+                fieldOptions.put(field, b.getOptionsforFloatField(field));
             } else if (fieldType.equals(Character.class)) {
-                //todo
+                fieldOptions.put(field, b.getOptionsforCharField(field));
             } else if (fieldType.equals(Short.class)) {
                 //todo
             } else if (fieldType.equals(Byte.class)) {
                 //todo
+            } else if (fieldType.equals(Boolean.class)) {
+                fieldOptions.put(field, b.getOptionsforBooleanField(field));
             } else if (Collection.class.isAssignableFrom(fieldType)) {
                 log("adding field option for Collection");
                 ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();

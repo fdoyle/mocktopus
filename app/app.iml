@@ -66,6 +66,8 @@
     <orderEntry type="library" exported="" name="dagger-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.4.1" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-android-0.19.6" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-core-0.19.6" level="project" />
     <orderEntry type="library" exported="" name="okhttp-1.5.4" level="project" />
   </component>
 </module>

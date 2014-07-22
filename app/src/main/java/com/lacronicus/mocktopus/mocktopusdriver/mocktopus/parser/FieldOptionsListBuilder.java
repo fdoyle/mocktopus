@@ -54,6 +54,49 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
+    public List<Object> getOptionsforIntegerField(Field field) {
+        List<Object> returnList = new ArrayList<Object>();
+        returnList.add(1);
+        returnList.add(-1);
+        returnList.add(0);
+        returnList.add(null);
+        return returnList;
+    }
 
-    //todo add parse methods for other types
+    public List<Object> getOptionsforDoubleField(Field field) {
+        List<Object> returnList = new ArrayList<Object>();
+        returnList.add(1.0);
+        returnList.add(-1.0);
+        returnList.add(0);
+        returnList.add(null);
+        return returnList;
+    }
+
+    public List<Object> getOptionsforFloatField(Field field) {
+        List<Object> returnList = new ArrayList<Object>();
+        returnList.add(1f);
+        returnList.add(-1f);
+        returnList.add(0f);
+        returnList.add(null);
+        return returnList;
+    }
+
+    public List<Object> getOptionsforCharField(Field field) {
+        List<Object> returnList = new ArrayList<Object>();
+        returnList.add('a');
+        returnList.add('\n');
+        returnList.add(null);
+        return returnList;
+    }
+
+    public List<Object> getOptionsforBooleanField(Field field) {
+        List<Object> returnList = new ArrayList<Object>();
+        returnList.add(true);
+        returnList.add(false);
+        returnList.add(null);
+        return returnList;
+    }
+
+
+    //todo other types?
 }

@@ -18,10 +18,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //myService.returnMyModel();
-        //myService.returnMyCollectionContainingModel();
+        myService.returnMyModel();
+        myService.returnMyCollectionContainingModel();
         myService.returnMyModelArrayList();
-       // myService.returnMyModelList();
+        myService.returnMyModelList();
         Button b = (Button) findViewById(R.id.open_config);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

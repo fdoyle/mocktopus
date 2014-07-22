@@ -8,19 +8,20 @@ todo:
 
 add a "real" api (maybe a weather api?)
 
-add config activity
+improve config activity
 
-add dagger stuff for proper injection of components
-add annotation parsing functionality
-add List support
+add api passthrough (so some methods are mocked, some make real requests)
 add more object support (support filling out Integer, Double, etc)
 add primitives support (just use objects for now?)
 add Map support (not uncommon with gson)
 add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
-generics support
-add api passthrough (so some methods are mocked, some make real requests)
+generics support - in progress.
 add observable support (for better retrofit support)
 add callback support (for better retrofit support)
+
+things to consider:
+instead of filling a list with a bunch of the same items, build the list with all the different items?
+    maybe have an @List(MyListBuilder.class) that makes a custom list instead of trying to do it automatically?
 
 more annotations?
 add way to set list of values to use for annotations (like to say StringImageUrl should use X,Y,and Z instead of its defaults)

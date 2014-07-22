@@ -11,6 +11,5 @@ import java.util.Map;
  * Created by fdoyle on 7/16/14.
  */
 public class FieldSettings extends HashMap<Pair<Method, Field>, Object>{
-
-
+    //this class exists for clarity
 }
