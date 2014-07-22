@@ -5,8 +5,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.ApiService;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 
 import javax.inject.Inject;
+
+import rx.functions.Action1;
 
 
 public class MainActivity extends BaseActivity {
@@ -22,7 +25,13 @@ public class MainActivity extends BaseActivity {
 //        myService.returnMyCollectionContainingModel();
 //        myService.returnMyModelArrayList();
 //        myService.returnMyModelList();
-        myService.returnMyModelListList();
+        //myService.returnMyModelListList();
+        myService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
+            @Override
+            public void call(MyModel myModel) {
+                Toast.makeText(MainActivity.this, "mymodel.myString = " + myModel.myString,Toast.LENGTH_SHORT).show();
+            }
+        });
         Button b = (Button) findViewById(R.id.open_config);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

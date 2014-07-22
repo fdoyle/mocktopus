@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import rx.Observable;
+
 /**
  * Created by fdoyle on 7/10/14.
  * Represents the options for entire interface
@@ -36,16 +38,20 @@ public class Options {
             Method method = methods[i];
             log("creating new base OptionsNode for method " + method.getName());
             Class returnClass = method.getReturnType();
-            if (Collection.class.isAssignableFrom(returnClass)) { // todo might be a List<Object> or might be something that extends List<Object>
+            if (Observable.class.isAssignableFrom(returnClass)) {
+                log("return type is observable: " + returnClass.getSimpleName());
+                ParameterizedType methodReturnType = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
+                Type observableType = methodReturnType.getActualTypeArguments()[0];//learn what's going on here
+
+                methodOptions.put(method, new ObservableOptionsNode(method, methodReturnType, observableType, 0));
+
+
+            } else if (Collection.class.isAssignableFrom(returnClass)) { // todo might be a List<Object> or might be something that extends List<Object>
                 log("return type is collection: " + returnClass.getSimpleName());
 
                 ParameterizedType methodReturnType = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
 
                 //ParameterizedType methodReturnClass = (ParameterizedType) method.getReturnType().getGenericSuperclass();//works on things that extend List<Object>
-
-                // todo resolve this
-                //this might be a parameterizedType
-
                 Type listType = methodReturnType.getActualTypeArguments()[0];//learn what's going on here
                 methodOptions.put(method, new CollectionOptionsNode(method, methodReturnType, listType, 0));
             } else {
@@ -63,7 +69,7 @@ public class Options {
     public Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
         log("creating a new object");
         Class<?> returnClass;
-        if(returnType instanceof Class) {
+        if (returnType instanceof Class) {
             returnClass = (Class<?>) returnType;
         } else {//if(childType instanceof ParameterizedType) {
             returnClass = (Class<?>) ((ParameterizedType) returnType).getRawType();
@@ -72,12 +78,10 @@ public class Options {
             //if this new thing is a collection, make a collection and add children
 
             //if it's a "plain" object, make it and fill in its fields
-            /*if(Observable.class.isAssignableFrom(returnClass)) {
-
-
-
-
-            } else */if (Collection.class.isAssignableFrom(returnClass)) {
+            if (Observable.class.isAssignableFrom(returnClass)) {
+                Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
+                return Observable.from(createObject(containedClass, method, currentSettings));
+            } else if (Collection.class.isAssignableFrom(returnClass)) {
                 List<Object> collection = new ArrayList<Object>();
                 Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 log("adding three items to collection");

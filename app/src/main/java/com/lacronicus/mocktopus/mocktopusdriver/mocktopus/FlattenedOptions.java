@@ -36,6 +36,10 @@ public class FlattenedOptions {
         itemList.add(new FlatOptionsItem(new CollectionObjectItem(type, parameterType)));
     }
 
+    public void addObservable(Type type, Type parameterType) {
+        itemList.add(new FlatOptionsItem(new ObservableObjectItem(type, parameterType)));
+    }
+
 
     public class FlatOptionsItem {
         public static final int TYPE_INVALID = -1;
@@ -43,12 +47,14 @@ public class FlattenedOptions {
         public static final int TYPE_CHILD = 1;
         public static final int TYPE_FIELD = 2;
         public static final int TYPE_COLLECTION = 3;
+        public static final int TYPE_OBSERVABLE = 4;
 
 
         public MethodItem methodItem;
         public ChildObjectItem childObjectItem;
         public MethodFieldItem methodFieldItem;
         public CollectionObjectItem collectionObjectItem;
+        public ObservableObjectItem observableObjectItem;
 
         public FlatOptionsItem(MethodItem item) {
             this.methodItem = item;
@@ -65,6 +71,9 @@ public class FlattenedOptions {
         public FlatOptionsItem(CollectionObjectItem item) {
             this.collectionObjectItem = item;
         }
+        public FlatOptionsItem(ObservableObjectItem item) {
+            this.observableObjectItem = item;
+        }
 
         public int getType() {
             if (methodItem != null) {
@@ -75,6 +84,8 @@ public class FlattenedOptions {
                 return TYPE_FIELD;
             } else if (collectionObjectItem != null) {
                 return TYPE_COLLECTION;
+            } else if (observableObjectItem != null) {
+                return TYPE_OBSERVABLE;
             } else {
                 return TYPE_INVALID;
             }
@@ -90,6 +101,8 @@ public class FlattenedOptions {
                     return methodFieldItem.getString();
                 case TYPE_COLLECTION:
                     return collectionObjectItem.getString();
+                case TYPE_OBSERVABLE:
+                    return observableObjectItem.getString();
                 default:
                     return "invalid";
             }
@@ -159,6 +172,21 @@ public class FlattenedOptions {
 
         public String getString() {
             return " collection  | " + clazz.toString();
+        }
+    }
+
+    //represents a collection
+    public class ObservableObjectItem {
+        public Type clazz;
+        public Type genericClass;
+
+        public ObservableObjectItem(Type clazz, Type genericClass) {
+            this.clazz = clazz;
+            this.genericClass = genericClass;
+        }
+
+        public String getString() {
+            return " observable  | " + clazz.toString();
         }
     }
 }
