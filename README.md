@@ -11,15 +11,12 @@ add a "real" api (maybe a weather api?)
 improve config activity
 
 add api passthrough (so some methods are mocked, some make real requests)
-add more object support (support filling out Integer, Double, etc)
 add primitives support (just use objects for now?)
 add Map support (not uncommon with gson)
 add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
-generics support - in progress.
-add observable support (for better retrofit support)
-    observable options?
-        delay
-        indefinite loading
+observable options?
+    delay
+    indefinite loading
 
 add callback support (for better retrofit support)
 
