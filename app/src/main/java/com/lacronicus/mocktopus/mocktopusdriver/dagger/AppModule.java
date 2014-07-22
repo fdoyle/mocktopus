@@ -58,19 +58,19 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Mocktopus provideMocktopus() { //todo what happens if there are multiple apis?
-        return new Mocktopus(ApiService.class);
+    Mocktopus<ApiService> provideMocktopus() { //todo what happens if there are multiple apis?
+        return new Mocktopus<ApiService>(ApiService.class);
     }
 
     @Provides
     @Singleton
-    ApiService provideApiService(Mocktopus mocktopus) {
+    ApiService provideApiService(Mocktopus<ApiService> mocktopus) {
         return mocktopus.getService();
     }
 
     @Provides
     @Singleton
-    MockInvocationHandler provideHandler(Mocktopus mocktopus) {
+    MockInvocationHandler provideHandler(Mocktopus<ApiService> mocktopus) {
         return mocktopus.getHandler();
     }
 

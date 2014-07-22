@@ -8,17 +8,17 @@ import java.lang.reflect.Proxy;
 /**
  * Created by fdoyle on 7/16/14.
  */
-public class Mocktopus {
+public class Mocktopus <T> {
 
-    public ApiService service;
+    public T service;
     public MockInvocationHandler handler;
 
     public Mocktopus(Class api) {
         handler = new MockInvocationHandler(api);
 
         //todo make this generic
-        service = (ApiService) Proxy.newProxyInstance(
-                ApiService.class.getClassLoader(),
+        service = (T) Proxy.newProxyInstance(
+                api.getClassLoader(),
                 new Class[]{api}, // is this right?
                 handler
         );
@@ -46,7 +46,7 @@ public class Mocktopus {
         return handler;
     }
 
-    public ApiService getService() {
+    public T getService() {
         return service;
     }
 
