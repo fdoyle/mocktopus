@@ -4,7 +4,6 @@ import android.util.Pair;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +32,8 @@ public class FlattenedOptions {
         itemList.add(new FlatOptionsItem(new MethodFieldItem(m, f, options)));
     }
 
-    public void addCollection(Type clazz, Type genericClass) {
-        itemList.add(new FlatOptionsItem(new CollectionObjectItem(clazz, genericClass)));
+    public void addCollection(Type type, Type parameterType) {
+        itemList.add(new FlatOptionsItem(new CollectionObjectItem(type, parameterType)));
     }
 
 

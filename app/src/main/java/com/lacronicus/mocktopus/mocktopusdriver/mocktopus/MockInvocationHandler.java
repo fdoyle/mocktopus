@@ -25,7 +25,7 @@ public class MockInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return options.createObject(method.getReturnType(), method, settings);
+        return options.createObject(method.getGenericReturnType(), method, settings);
     }
 
     public Options getOptions() {

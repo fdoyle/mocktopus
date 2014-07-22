@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,17 +37,17 @@ public class Options {
             log("creating new base OptionsNode for method " + method.getName());
             Class returnClass = method.getReturnType();
             if (Collection.class.isAssignableFrom(returnClass)) { // todo might be a List<Object> or might be something that extends List<Object>
-                log("return type is collection");
+                log("return type is collection: " + returnClass.getSimpleName());
 
-                ParameterizedType methodReturnClass = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
+                ParameterizedType methodReturnType = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
 
                 //ParameterizedType methodReturnClass = (ParameterizedType) method.getReturnType().getGenericSuperclass();//works on things that extend List<Object>
 
                 // todo resolve this
                 //this might be a parameterizedType
-                Type listType = methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
-                Class<?> listClass = (Class<?>) listType;
-                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnClass, listClass, 0));
+
+                Type listType = methodReturnType.getActualTypeArguments()[0];//learn what's going on here
+                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnType, listType, 0));
             } else {
                 methodOptions.put(method, new SingleObjectOptionsNode(method, returnClass, 0));
             }
@@ -59,8 +60,14 @@ public class Options {
 
 
     //call this recursively
-    public <T> T createObject(Class<T> returnClass, Method method, FieldSettings currentSettings) {
+    public Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
         log("creating a new object");
+        Class<?> returnClass;
+        if(returnType instanceof Class) {
+            returnClass = (Class<?>) returnType;
+        } else {//if(childType instanceof ParameterizedType) {
+            returnClass = (Class<?>) ((ParameterizedType) returnType).getRawType();
+        }
         try {
             //if this new thing is a collection, make a collection and add children
 
@@ -71,17 +78,16 @@ public class Options {
 
 
             } else */if (Collection.class.isAssignableFrom(returnClass)) {
-                T retValue = returnClass.newInstance();
-                Collection collection = (Collection) retValue;
-                Type containedClass = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+                List<Object> collection = new ArrayList<Object>();
+                Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 log("adding three items to collection");
-                collection.add(createObject((Class<T>)containedClass, method, currentSettings));
-                collection.add(createObject((Class<T>)containedClass, method, currentSettings));
-                collection.add(createObject((Class<T>)containedClass, method, currentSettings));
+                collection.add(createObject(containedClass, method, currentSettings));
+                collection.add(createObject(containedClass, method, currentSettings));
+                collection.add(createObject(containedClass, method, currentSettings));
 
-                return retValue;
+                return collection;
             } else {
-                T response = returnClass.newInstance();
+                Object response = returnClass.newInstance();
                 Field[] fields = returnClass.getDeclaredFields(); // todo add support for super classes here
 
                 for (int i = 0; i != fields.length; i++) {

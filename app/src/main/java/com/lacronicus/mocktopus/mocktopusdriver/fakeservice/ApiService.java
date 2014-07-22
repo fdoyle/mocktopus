@@ -15,10 +15,10 @@ import rx.Observable;
 public interface ApiService {
     @GET("/foo")
     public MyModel returnMyModel();
-    public MyCollectionContainingModel returnMyCollectionContainingModel();
+    //public MyCollectionContainingModel returnMyCollectionContainingModel();
     //public MyCollectionExtendingModel returnMyCollectionExtendingModel(); //todo fix this one
-    public List<MyModel> returnMyModelList();
+    //public List<MyModel> returnMyModelList();
     public List<List<MyModel>> returnMyModelListList();
-    public ArrayList<MyModel> returnMyModelArrayList();
-    public Observable<MyModel> returnMyModelObservable();
+    //public ArrayList<MyModel> returnMyModelArrayList();
+    //public Observable<MyModel> returnMyModelObservable();
 }

@@ -1,7 +1,9 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 
 /**
  * Created by fdoyle on 7/16/14.
@@ -10,19 +12,32 @@ import java.lang.reflect.Type;
  */
 public class CollectionOptionsNode implements IOptionsNode{
 
-    SingleObjectOptionsNode node; // single options node representing all the contents of the associated collection
+    IOptionsNode node; // represents the children of this collection. may be another collection, so be careful
     Type containerType;
-    Class containedClass;
+    Type parameterType;
 
-    public CollectionOptionsNode(Method m, Type ContainerType, Class containedClass, int depth) {
-        node = new SingleObjectOptionsNode(m, containedClass, depth + 1);
-        this.containedClass = containedClass;
-        this.containerType = ContainerType;
+    public CollectionOptionsNode(Method m, Type myType, Type childType, int depth) {
+        Class<?> childClass;
+        if(childType instanceof Class) {
+            childClass = (Class<?>) childType;
+        } else {//if(childType instanceof ParameterizedType) {
+            childClass = (Class<?>) ((ParameterizedType) childType).getRawType();
+        }
+
+        if(Collection.class.isAssignableFrom(childClass)) {
+            ParameterizedType childParameterizedType = (ParameterizedType) childType;
+            node = new CollectionOptionsNode(m, childType, childParameterizedType.getActualTypeArguments()[0], depth +1);
+        } else {
+            //assume that it contains plain objects
+            node = new SingleObjectOptionsNode(m, (Class<?>) childType, depth + 1);//do this if this represents a collection of plain objects
+        }
+        this.parameterType = childType;
+        this.containerType = myType;
     }
 
 
     public void addToFlattenedOptions(FlattenedOptions flattenedOptions) {
-        flattenedOptions.addCollection(containerType, containedClass);
+        flattenedOptions.addCollection(containerType, parameterType);
         node.addToFlattenedOptions(flattenedOptions);
     }
 
