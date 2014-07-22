@@ -43,8 +43,10 @@ public class Options {
                 //ParameterizedType methodReturnClass = (ParameterizedType) method.getReturnType().getGenericSuperclass();//works on things that extend List<Object>
 
                 // todo resolve this
-                Class<?> listType = (Class<?>) methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
-                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnClass, listType, 0));
+                //this might be a parameterizedType
+                Type listType = methodReturnClass.getActualTypeArguments()[0];//learn what's going on here
+                Class<?> listClass = (Class<?>) listType;
+                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnClass, listClass, 0));
             } else {
                 methodOptions.put(method, new SingleObjectOptionsNode(method, returnClass, 0));
             }
@@ -86,22 +88,23 @@ public class Options {
                     Field field = fields[i];
                     Class fieldType = field.getType();
                     if (fieldType.equals(String.class)) {
-                        log("loading " + currentSettings.get(new Pair<Method, Field>(method, field)) + " into " + field.getName());
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
-                    } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
-                        //todo
+                    } else if (fieldType.equals(Integer.class)) {
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Long.class)) {
                         //todo
                     } else if (fieldType.equals(Double.class)) {
-                        //todo
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Float.class)) {
-                        //todo
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Character.class)) {
-                        //todo
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Short.class)) {
                         //todo
                     } else if (fieldType.equals(Byte.class)) {
                         //todo
+                    } else if (fieldType.equals(Boolean.class)) {
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                         // may need to explicity state what children to add
                         // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
