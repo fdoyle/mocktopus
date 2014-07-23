@@ -4,13 +4,13 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 /**
  * Created by fdoyle on 7/15/14.
  */
-public class OptionsAdapter extends BaseAdapter {
+public class OptionsAdapter extends BaseExpandableListAdapter {
     FlattenedOptions options;
 
     Context c;
@@ -23,42 +23,121 @@ public class OptionsAdapter extends BaseAdapter {
         this.options = options;
     }
 
+
     @Override
-    public int getCount() {
-        if(options == null)
+    public int getGroupCount() {
+        if (options == null)
             return 0;
         return options.itemList.size();
     }
 
     @Override
-    public FlattenedOptions.FlatOptionsItem getItem(int position) {
-        return options.itemList.get(position);
+    public int getChildrenCount(int groupPosition) {
+        switch (getGroupType(groupPosition)) {
+            case FlattenedOptions.FlatOptionsItem.TYPE_METHOD:
+                return 0;//todo
+            case FlattenedOptions.FlatOptionsItem.TYPE_OBSERVABLE:
+                return 0;//todo
+            case FlattenedOptions.FlatOptionsItem.TYPE_COLLECTION:
+                return 0;//todo
+            case FlattenedOptions.FlatOptionsItem.TYPE_CHILD:
+                return 0;//todo
+            case FlattenedOptions.FlatOptionsItem.TYPE_FIELD:
+                return getGroup(groupPosition).methodFieldItem.fieldOptions.size();
+            case FlattenedOptions.FlatOptionsItem.TYPE_INVALID:
+            default:
+                return 0;
+        }
     }
 
     @Override
-    public long getItemId(int position) {
+    public FlattenedOptions.FlatOptionsItem getGroup(int groupPosition) {
+        return options.itemList.get(groupPosition);
+    }
+
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return null;
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public long getChildId(int groupPosition, int childPosition) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         TextView t = new TextView(c);
-        t.setText(options.itemList.get(position).getString());
-        if(getItemViewType(position) == FlattenedOptions.FlatOptionsItem.TYPE_METHOD) {
+        t.setText(options.itemList.get(groupPosition).getString());
+        if (getGroupType(groupPosition) == FlattenedOptions.FlatOptionsItem.TYPE_METHOD) {
             t.setTypeface(null, Typeface.BOLD);
         }
-        t.setPadding(20,20,20,20);
+        t.setPadding(20, 20, 20, 20);
 
         return t;
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 4;
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        TextView t = new TextView(c);
+        t.setPadding(20, 20, 20, 20);
+        FlattenedOptions.FlatOptionsItem group = getGroup(groupPosition);
+        switch (group.getType()) {
+            case FlattenedOptions.FlatOptionsItem.TYPE_METHOD:
+                break;
+            case FlattenedOptions.FlatOptionsItem.TYPE_OBSERVABLE:
+                break;
+            case FlattenedOptions.FlatOptionsItem.TYPE_COLLECTION:
+                break;
+            case FlattenedOptions.FlatOptionsItem.TYPE_CHILD:
+                break;
+            case FlattenedOptions.FlatOptionsItem.TYPE_FIELD:
+                Object childObject = group.methodFieldItem.fieldOptions.get(childPosition);
+                t.setText(String.valueOf(childObject));
+                break;
+            case FlattenedOptions.FlatOptionsItem.TYPE_INVALID:
+            default:
+                t.setText("invalid");
+                break;
+        }
+        return t;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return getItem(position).getType();
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
     }
+
+    @Override
+    public int getGroupTypeCount() {
+        return 5;
+
+    }
+
+    @Override
+    public int getChildType(int groupPosition, int childPosition) {
+        return super.getChildType(groupPosition, childPosition);
+    }
+
+    @Override
+    public int getGroupType(int groupPosition) {
+        return getGroup(groupPosition).getType();
+    }
+
+    @Override
+    public int getChildTypeCount() {
+        return super.getChildTypeCount();
+    }
+
+
 }

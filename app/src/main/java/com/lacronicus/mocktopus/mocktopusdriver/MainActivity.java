@@ -3,6 +3,7 @@ package com.lacronicus.mocktopus.mocktopusdriver;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.ApiService;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
@@ -17,19 +18,22 @@ public class MainActivity extends BaseActivity {
     @Inject
     ApiService myService;
 
+    TextView t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //myService.returnMyModel();
+        t = (TextView) findViewById(R.id.tv);
+//        myService.returnMyModel();
 //        myService.returnMyCollectionContainingModel();
 //        myService.returnMyModelArrayList();
 //        myService.returnMyModelList();
-        //myService.returnMyModelListList();
+//        myService.returnMyModelListList();
         myService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
             @Override
             public void call(MyModel myModel) {
-                Toast.makeText(MainActivity.this, "mymodel.myString = " + myModel.myString,Toast.LENGTH_SHORT).show();
+                t.setText("mymodel.myString = " + myModel.myString);
             }
         });
         Button b = (Button) findViewById(R.id.open_config);
