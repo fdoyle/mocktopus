@@ -25,7 +25,9 @@ instead of filling a list with a bunch of the same items, build the list with al
     maybe have an @List(MyListBuilder.class) that makes a custom list instead of trying to do it automatically?
 
 more annotations?
-add way to set list of values to use for annotations (like to say StringImageUrl should use X,Y,and Z instead of its defaults)
+    for object - ObjectBuilder builds a dev-designed object
+    for list - add way to set list of values to use for annotations (like to say StringImageUrl should use X,Y,and Z instead of its defaults)
+        place annotation on list content object so it can define how it wants to exist in a list?
 
 
 add some flavors to show how to use next to a "real" api

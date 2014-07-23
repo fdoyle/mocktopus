@@ -1,5 +1,6 @@
 package com.lacronicus.mocktopus.mocktopusdriver.redditservice.model;
 
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringFixed;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringImageUrl;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringWebpageUrl;
 
@@ -28,6 +29,7 @@ public class SubredditResponse {
     public static class ChildData {
         @StringWebpageUrl
         public String domain;
+        @StringFixed("/r/androiddev")
         public String subreddit;
         public String selftext_html;
         public String selftext;

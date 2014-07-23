@@ -1,6 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver;
 
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void call(SubredditResponse subredditResponse) {
                 t.setText(gson.toJson(subredditResponse));
+                Linkify.addLinks(t, Linkify.ALL);
             }
         });
         b.setOnClickListener(new View.OnClickListener() {

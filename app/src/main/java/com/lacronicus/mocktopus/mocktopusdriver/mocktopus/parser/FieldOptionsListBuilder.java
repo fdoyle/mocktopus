@@ -3,6 +3,7 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.parser;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringDate;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringFixed;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringImageUrl;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringWebpageUrl;
 
 import java.lang.reflect.Field;
 import java.text.DateFormat;
@@ -43,7 +44,13 @@ public class FieldOptionsListBuilder {
 
         }
         if(field.isAnnotationPresent(StringImageUrl.class)) {
-            //todo
+            StringImageUrl fixed = field.getAnnotation(StringImageUrl.class);
+            returnList.add(fixed.value());
+        }
+
+        if(field.isAnnotationPresent(StringWebpageUrl.class)) {
+            StringWebpageUrl fixed = field.getAnnotation(StringWebpageUrl.class);
+            returnList.add(fixed.value());
         }
 
         returnList.add("Simple String");

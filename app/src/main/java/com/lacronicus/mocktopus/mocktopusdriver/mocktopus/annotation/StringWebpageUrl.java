@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.FIELD)
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface StringWebpageUrl {
-    String value() default "http://www.google.com"; //todo change this
+    String value() default "http://www.google.com";
 }
 
