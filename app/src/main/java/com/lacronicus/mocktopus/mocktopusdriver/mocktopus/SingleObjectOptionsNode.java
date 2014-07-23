@@ -38,7 +38,7 @@ public class SingleObjectOptionsNode implements IOptionsNode{
      * @param depth      distance to "root" OptionsNode
      */
     public SingleObjectOptionsNode(Method m, Class layerClass, int depth) {
-        log("new OptionsNode");
+        log("new SingleOptionsNode for method: " + m.getName() +" className: " +  layerClass.getSimpleName());
         this.method = m;
         this.layerClass = layerClass;
         fieldOptions = new HashMap<Field, List<Object>>();
@@ -53,8 +53,10 @@ public class SingleObjectOptionsNode implements IOptionsNode{
 
             Class fieldType = field.getType();
 
-
-            if (fieldType.equals(String.class)) {
+            if (field.getName().equals("this$0")) {
+                log("found 'this'");
+                //is there a better way to do this?
+            } else if (fieldType.equals(String.class)) {
                 fieldOptions.put(field, b.getOptionsForStringField(field));
             } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
                 fieldOptions.put(field, b.getOptionsforIntegerField(field));
@@ -73,15 +75,14 @@ public class SingleObjectOptionsNode implements IOptionsNode{
             } else if (fieldType.equals(Boolean.class)) {
                 fieldOptions.put(field, b.getOptionsforBooleanField(field));
             } else if (Collection.class.isAssignableFrom(fieldType)) {
-                log("adding field option for Collection");
+                log("adding field option for Collection: " + field.getName() + " depth " + depth);
                 ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
                 Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
                 //Collection collection = (Collection) field.get(response);
                 childCollectionOptions.put(field, new CollectionOptionsNode(method, fieldType, listClass, depth + 1));
-
             } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
-                childOptions.put(field, new SingleObjectOptionsNode(method, fieldType, depth + 1));
                 log("adding field option for child Object" + field.getName());
+                childOptions.put(field, new SingleObjectOptionsNode(method, fieldType, depth + 1));
             }
 
         }

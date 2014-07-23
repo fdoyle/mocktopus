@@ -4,6 +4,9 @@ import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by fdoyle on 7/10/14.
@@ -15,6 +18,7 @@ public class MockInvocationHandler implements InvocationHandler {
 
 
     public MockInvocationHandler(Class api) {
+
         options = new Options(api);
         settings = options.getDefaultFieldSettings();
 

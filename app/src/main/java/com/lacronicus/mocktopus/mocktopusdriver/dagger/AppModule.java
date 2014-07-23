@@ -6,10 +6,11 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.lacronicus.mocktopus.mocktopusdriver.MainActivity;
 import com.lacronicus.mocktopus.mocktopusdriver.MainApp;
-import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.ApiService;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.ConfigurationActivity;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.MockInvocationHandler;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.Mocktopus;
+import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 
 import javax.inject.Singleton;
 
@@ -56,29 +57,43 @@ public class AppModule {
         return new Gson();
     }
 
-    @Provides
+    /*@Provides
     @Singleton
-    Mocktopus<ApiService> provideMocktopus() { //todo what happens if there are multiple apis?
-        return new Mocktopus<ApiService>(ApiService.class);
+    Mocktopus<FakeService> provideMocktopus() { //todo what happens if there are multiple apis?
+        return new Mocktopus<FakeService>(FakeService.class);
     }
 
     @Provides
     @Singleton
-    ApiService provideApiService(Mocktopus<ApiService> mocktopus) {
+    FakeService provideApiService(Mocktopus<FakeService> mocktopus) {
         return mocktopus.getService();
     }
 
     @Provides
     @Singleton
-    MockInvocationHandler provideHandler(Mocktopus<ApiService> mocktopus) {
+    MockInvocationHandler provideHandler(Mocktopus<FakeService> mocktopus) {
+        return mocktopus.getHandler();
+    }*/
+
+    @Provides
+    @Singleton
+    Mocktopus<RedditService> provideMocktopus() { //todo what happens if there are multiple apis?
+        return new Mocktopus<RedditService>(RedditService.class);
+    }
+
+    @Provides
+    @Singleton
+    RedditService provideRedditService(Mocktopus<RedditService> mocktopus) {
+        return mocktopus.getService();
+    }
+
+    @Provides
+    @Singleton
+    MockInvocationHandler provideHandler(Mocktopus<RedditService> mocktopus) {
         return mocktopus.getHandler();
     }
 
-    /*@Provides
-    @Singleton
-    GithubService provideGithubService() {
 
-    }*/
 
 
 }

@@ -3,17 +3,25 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 import android.util.Log;
 import android.util.Pair;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import retrofit.http.DELETE;
+import retrofit.http.GET;
+import retrofit.http.HEAD;
+import retrofit.http.POST;
+import retrofit.http.PUT;
 import rx.Observable;
 
 /**
@@ -82,6 +90,7 @@ public class Options {
                 Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 return Observable.from(createObject(containedClass, method, currentSettings));
             } else if (Collection.class.isAssignableFrom(returnClass)) {
+                log("returnClass is collection " + returnClass.getSimpleName());
                 List<Object> collection = new ArrayList<Object>();
                 Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 log("adding three items to collection");
@@ -121,7 +130,7 @@ public class Options {
                         // about the fields. hmm...
 
                         log("loading new object into " + field.getName());
-                        field.set(response, createObject(fieldType, method, currentSettings));
+                        field.set(response, createObject(field.getGenericType(), method, currentSettings));
 
                     }
                 }
@@ -141,7 +150,19 @@ public class Options {
         Set<Method> methodSet = methodOptions.keySet();
         for (Method method : methodSet) {
             //add method to flattenedOptions
-            flattenedOptions.addMethod(method, method.getName()); //todo change to endpoint name
+            String endpoint = "";
+            if (method.getAnnotation(GET.class) != null)
+                endpoint += method.getAnnotation(GET.class).value();
+            if (method.getAnnotation(POST.class) != null)
+                endpoint += method.getAnnotation(POST.class).value();
+            if (method.getAnnotation(PUT.class) != null)
+                endpoint += method.getAnnotation(PUT.class).value();
+            if (method.getAnnotation(DELETE.class) != null)
+                endpoint += method.getAnnotation(DELETE.class).value();
+            if (method.getAnnotation(HEAD.class) != null)
+                endpoint += method.getAnnotation(HEAD.class).value();
+
+            flattenedOptions.addMethod(method, endpoint); //todo change to endpoint name
             //add fields to flattenedOptions
             methodOptions.get(method).addToFlattenedOptions(flattenedOptions);
         }

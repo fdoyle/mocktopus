@@ -121,7 +121,7 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return "method | " + method.getName() + " | " + endpoint;
+            return "method\n" + method.getName() + "\n" + endpoint;
         }
     }
 
