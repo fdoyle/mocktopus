@@ -82,8 +82,7 @@ public class OptionsAdapter extends BaseExpandableListAdapter {
         if (getGroupType(groupPosition) == FlattenedOptions.FlatOptionsItem.TYPE_METHOD) {
             t.setTypeface(null, Typeface.BOLD);
         }
-        t.setPadding(20, 20, 20, 20);
-
+        t.setPadding(80, 20, 20, 20);
         return t;
     }
 

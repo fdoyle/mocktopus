@@ -47,7 +47,7 @@ public class FieldOptionsListBuilder {
         }
 
         returnList.add("hello");
-        returnList.add("hello\nhello\nhello\n");
+        returnList.add("hello\nhello\nhello");
         returnList.add(null);
 
 
