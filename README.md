@@ -5,32 +5,35 @@ This thing isn't done yet, don't look at it!
 
 
 todo:
+-----
 
-add a "real" api (maybe a weather api?)
+* expand on reddit api
+    * story detail
+    * user detail
+* improve config activity
+    * show currently selected value
+* improve configuration
+    * method options
+        * error/success 
+    * observable options
+        * delay
+        * indefinite loading?
 
-improve config activity
+* add primitives support (support int, not just Integer)
+* add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
+* add callback support (for better retrofit support)
+* more annotations?
+    * string
+    * int
+* list builder options/settings?
+* add some flavors to show how to use next to a "real" api
+* support multiple retrofit apis at the same time
 
-add api passthrough (so some methods are mocked, some make real requests)
-add primitives support (just use objects for now?)
-add Map support (not uncommon with gson)
-add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
-observable options?
-    delay
-    indefinite loading
+        
+* add api passthrough (so some methods are mocked, some make real requests)
+    * add "leave alone" as default option
+    * instead of building out an object, your "builder" takes an object and modifies fields
+    * would this be better done as a separate tool?
+        * there's some conceptual overlap, but implementation and setup would probably be very different
+        * would this require a third build type?
 
-add callback support (for better retrofit support)
-
-things to consider:
-instead of filling a list with a bunch of the same items, build the list with all the different items?
-    maybe have an @List(MyListBuilder.class) that makes a custom list instead of trying to do it automatically?
-
-more annotations?
-    for object - ObjectBuilder builds a dev-designed object
-    for list - add way to set list of values to use for annotations (like to say StringImageUrl should use X,Y,and Z instead of its defaults)
-        place annotation on list content object so it can define how it wants to exist in a list?
-
-
-add some flavors to show how to use next to a "real" api
-
-long-term to-do
-code generation instead of runtime?
