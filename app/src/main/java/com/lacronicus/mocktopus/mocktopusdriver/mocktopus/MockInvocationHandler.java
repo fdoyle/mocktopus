@@ -29,7 +29,7 @@ public class MockInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return options.createObject(method.getGenericReturnType(), method, settings);
+        return ObjectCreator.createObject(method.getGenericReturnType(), method, settings);
     }
 
     public Options getOptions() {
