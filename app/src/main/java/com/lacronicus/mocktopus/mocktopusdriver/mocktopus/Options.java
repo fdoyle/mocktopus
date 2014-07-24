@@ -3,6 +3,9 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 import android.util.Log;
 import android.util.Pair;
 
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListBuilder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.builder.IListBuilder;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -74,7 +77,7 @@ public class Options {
 
 
     //call this recursively
-    public Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
+    public static Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
         log("creating a new object");
         Class<?> returnClass;
         if (returnType instanceof Class) {
@@ -92,11 +95,22 @@ public class Options {
             } else if (Collection.class.isAssignableFrom(returnClass)) {
                 log("returnClass is collection " + returnClass.getSimpleName());
                 List<Object> collection = new ArrayList<Object>();
-                Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
+                Type containedType = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 log("adding three items to collection");
-                collection.add(createObject(containedClass, method, currentSettings));
-                collection.add(createObject(containedClass, method, currentSettings));
-                collection.add(createObject(containedClass, method, currentSettings));
+                if(containedType instanceof Class<?> && ((Class<?>) containedType).isAnnotationPresent(ListBuilder.class)) {
+                    Class containedClass = (Class<?>) containedType;
+                    ListBuilder builderAnnotation = (ListBuilder) containedClass.getAnnotation(ListBuilder.class);
+                    IListBuilder builder = builderAnnotation.value().newInstance();
+                    int count = builder.getCount();
+                    for(int i = 0; i != count; i++) {
+                        collection.add(createObject(containedType, method, currentSettings));
+                    }
+                    builder.modifyList(collection);
+                } else {
+                    collection.add(createObject(containedType, method, currentSettings));
+                    collection.add(createObject(containedType, method, currentSettings));
+                    collection.add(createObject(containedType, method, currentSettings));
+                }
 
                 return collection;
             } else {
@@ -129,7 +143,7 @@ public class Options {
                         // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge
                         // about the fields. hmm...
 
-                        log("loading new object into " + field.getName());
+                        //log("loading new object into " + field.getName());
                         field.set(response, createObject(field.getGenericType(), method, currentSettings));
 
                     }
@@ -162,7 +176,7 @@ public class Options {
             if (method.getAnnotation(HEAD.class) != null)
                 endpoint += method.getAnnotation(HEAD.class).value();
 
-            flattenedOptions.addMethod(method, endpoint); //todo change to endpoint name
+            flattenedOptions.addMethod(method, endpoint);
             //add fields to flattenedOptions
             methodOptions.get(method).addToFlattenedOptions(flattenedOptions);
         }
@@ -181,10 +195,8 @@ public class Options {
     }
 
 
-    private void log(String statement) {
-        if (level.equals(LogLevel.FULL)) {
-            Log.d(Tag.mainTag + this.getClass().getName(), statement);
-        }
+    private static void log(String statement) {
+            Log.d(Tag.mainTag + Options.class.getName(), statement);
     }
 
 

@@ -1,8 +1,8 @@
 package com.lacronicus.mocktopus.mocktopusdriver.redditservice.model;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringFixed;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringImageUrl;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringWebpageUrl;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringFixed;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringImageUrl;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringWebpageUrl;
 
 import java.util.List;
 

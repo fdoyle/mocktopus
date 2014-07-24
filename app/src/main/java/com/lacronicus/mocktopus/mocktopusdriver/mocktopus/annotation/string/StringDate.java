@@ -1,4 +1,4 @@
-package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation;
+package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -8,8 +8,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionItemModel;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.model.SubredditResponse;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivity {
                 Linkify.addLinks(t, Linkify.ALL);
             }
         });
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

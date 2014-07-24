@@ -1,18 +1,15 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.parser;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringDate;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringFixed;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringImageUrl;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.StringWebpageUrl;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringDate;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringFixed;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringImageUrl;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringWebpageUrl;
 
 import java.lang.reflect.Field;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by fdoyle on 7/10/14.

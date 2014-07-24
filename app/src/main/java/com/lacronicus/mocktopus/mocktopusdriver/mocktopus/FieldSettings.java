@@ -12,4 +12,8 @@ import java.util.Map;
  */
 public class FieldSettings extends HashMap<Pair<Method, Field>, Object>{
     //this class exists for clarity
+
+    //make this a general settings object
+    //add observable settings support
+    //add List settings support
 }

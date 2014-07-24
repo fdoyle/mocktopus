@@ -121,7 +121,7 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return "method\n" + method.getName() + "\n" + endpoint;
+            return "method\n name: " + method.getName() + "\n endpoint: " + endpoint;
         }
     }
 
@@ -139,7 +139,7 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return "  field | " + field.getName();
+            return "        " + field.getType().getSimpleName() + " " + field.getName();
         }
 
         public Pair<Method, Field> getPair() {
@@ -156,7 +156,7 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return " class | " + clazz.getSimpleName();
+            return "    class | " + clazz.getSimpleName();
         }
     }
 
@@ -171,7 +171,7 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return " collection  | " + clazz.toString();
+            return "    collection  | " + clazz.toString();
         }
     }
 
@@ -186,7 +186,7 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return " observable  | " + clazz.toString();
+            return "    observable  | " + clazz.toString();
         }
     }
 }
