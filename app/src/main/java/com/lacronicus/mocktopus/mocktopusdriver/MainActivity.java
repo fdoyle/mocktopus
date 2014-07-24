@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionItemModel;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.model.SubredditResponse;
@@ -23,6 +24,9 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     RedditService myService;
+
+    @Inject
+    FakeService fakeService;
 
     TextView t;
 

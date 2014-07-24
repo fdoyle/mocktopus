@@ -57,44 +57,24 @@ public class AppModule {
         return new Gson();
     }
 
-    /*@Provides
+    @Provides
     @Singleton
-    Mocktopus<FakeService> provideMocktopus() { //todo what happens if there are multiple apis?
-        return new Mocktopus<FakeService>(FakeService.class);
+    Mocktopus provideMocktopus() {
+        return new Mocktopus();
     }
 
     @Provides
     @Singleton
-    FakeService provideApiService(Mocktopus<FakeService> mocktopus) {
-        return mocktopus.getService();
-    }
-
-    @Provides
-    @Singleton
-    MockInvocationHandler provideHandler(Mocktopus<FakeService> mocktopus) {
-        return mocktopus.getHandler();
-    }*/
-
-    @Provides
-    @Singleton
-    Mocktopus<RedditService> provideMocktopus() { //todo what happens if there are multiple apis?
-        return new Mocktopus<RedditService>(RedditService.class);
-    }
-
-    @Provides
-    @Singleton
-    RedditService provideRedditService(Mocktopus<RedditService> mocktopus) {
-        return mocktopus.getService();
-    }
-
-    @Provides
-    @Singleton
-    MockInvocationHandler provideHandler(Mocktopus<RedditService> mocktopus) {
-        return mocktopus.getHandler();
+    FakeService provideFakeService(Mocktopus mocktopus) {
+        return mocktopus.initApi(FakeService.class);
     }
 
 
-
+    @Provides
+    @Singleton
+    RedditService provideRedditService(Mocktopus mocktopus) {
+        return mocktopus.initApi(RedditService.class);
+    }
 
 }
 

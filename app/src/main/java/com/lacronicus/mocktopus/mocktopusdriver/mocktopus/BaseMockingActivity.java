@@ -2,13 +2,14 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
 /**
  * Created by fdoyle on 7/15/14.
  */
-public class BaseMockingActivity extends Activity {
-    public static final int CONFIG_REQUEST_CODE = -1000001;
+public class BaseMockingActivity extends FragmentActivity {
+    public static final int CONFIG_REQUEST_CODE = 999;
 
 
 
