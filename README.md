@@ -14,6 +14,7 @@ how to use
 todo:
 -----
 
+* support lists of "Primitives" (integers, etc)
 * expand on demo reddit api
     * story detail
     * user detail
