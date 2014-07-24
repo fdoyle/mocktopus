@@ -17,12 +17,19 @@ public class ConfigFragmentAdapter extends FragmentPagerAdapter {
 
     public ConfigFragmentAdapter(FragmentManager fm) {
         super(fm);
+
     }
 
     public void setContent(Mocktopus mocktopus) {
         this.mocktopus = mocktopus;
         services = new ArrayList<Type>(mocktopus.getApiSet());
 
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        Class clazz = (Class) services.get(position);
+        return clazz.getSimpleName();
     }
 
     @Override
