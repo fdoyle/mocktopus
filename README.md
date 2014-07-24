@@ -1,15 +1,25 @@
 mocktopus
 =========
 
-This thing isn't done yet, don't look at it!
+This thing is approaching usable. You can look at it now
+
+how to use
+
+1. annotate your model objects
+2. inject mocktopus service in place of real service
+3. start your app and change stuff in the config screen
+4. see results!
 
 
 todo:
 -----
 
-* expand on reddit api
+* expand on demo reddit api
     * story detail
     * user detail
+* improve demo 
+    * show what a "real" consumer activity would look like
+    * move json viewer into another activity
 * improve config activity
     * show currently selected value
 * improve configuration
