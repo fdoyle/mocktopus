@@ -14,6 +14,7 @@ how to use
 todo:
 -----
 
+* rotation support in ConfigurationActivity
 * support lists of "Primitives" (integers, etc)
 * expand on demo reddit api
     * story detail
