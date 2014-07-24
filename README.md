@@ -37,7 +37,6 @@ todo:
     * int
 * list builder options/settings?
 * add some flavors to show how to use next to a "real" api
-* support multiple retrofit apis at the same time
 
         
 * add api passthrough (so some methods are mocked, some make real requests)
