@@ -41,9 +41,10 @@ todo:
 
         
 * add api passthrough (so some methods are mocked, some make real requests)
-    * add "leave alone" as default option
-    * instead of building out an object, your "builder" takes an object and modifies fields
-    * would this be better done as a separate tool?
-        * there's some conceptual overlap, but implementation and setup would probably be very different
-        * would this require a third build type?
 
+api passthrough should be an api level setting, it has its own "settings" that adds a new default, "passthrough"
+
+instead of an object builder, you use an object modifier that iterates through 
+all the fields in the response and modifies them to be the values set in the settings object, 
+ignoring fields set to "passthrough." This would make working with recursive objects easier, 
+as well as providing more realistic data.
