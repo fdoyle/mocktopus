@@ -28,11 +28,11 @@ public class FieldOptionsListBuilder {
         //todo sane ordering of annotations? which ones are most important and should be default
 
 
-        if(field.isAnnotationPresent(StringFixed.class)) {
+        if (field.isAnnotationPresent(StringFixed.class)) {
             StringFixed fixed = field.getAnnotation(StringFixed.class);
             returnList.add(fixed.value());
         }
-        if(field.isAnnotationPresent(StringDate.class)) {
+        if (field.isAnnotationPresent(StringDate.class)) {
             String formatString = field.getAnnotation(StringDate.class).value();
             SimpleDateFormat format = new SimpleDateFormat(formatString);
             String dateString = format.format(new Date());
@@ -40,12 +40,12 @@ public class FieldOptionsListBuilder {
 
 
         }
-        if(field.isAnnotationPresent(StringImageUrl.class)) {
+        if (field.isAnnotationPresent(StringImageUrl.class)) {
             StringImageUrl fixed = field.getAnnotation(StringImageUrl.class);
             returnList.add(fixed.value());
         }
 
-        if(field.isAnnotationPresent(StringWebpageUrl.class)) {
+        if (field.isAnnotationPresent(StringWebpageUrl.class)) {
             StringWebpageUrl fixed = field.getAnnotation(StringWebpageUrl.class);
             returnList.add(fixed.value());
         }
@@ -60,46 +60,53 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforIntegerField(Field field) {
+
+    public List<Object> getOptionsforIntegerField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1);
         returnList.add(-1);
         returnList.add(0);
-        returnList.add(null);
+        if (isObject)
+            returnList.add(null);
         return returnList;
     }
 
-    public List<Object> getOptionsforDoubleField(Field field) {
+
+    public List<Object> getOptionsforDoubleField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1.0);
         returnList.add(-1.0);
         returnList.add(0);
-        returnList.add(null);
+        if (isObject)
+            returnList.add(null);
         return returnList;
     }
 
-    public List<Object> getOptionsforFloatField(Field field) {
+    public List<Object> getOptionsforFloatField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1f);
         returnList.add(-1f);
         returnList.add(0f);
-        returnList.add(null);
+        if (isObject)
+            returnList.add(null);
         return returnList;
     }
 
-    public List<Object> getOptionsforCharField(Field field) {
+    public List<Object> getOptionsforCharField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add('a');
         returnList.add('\n');
-        returnList.add(null);
+        if (isObject)
+            returnList.add(null);
         return returnList;
     }
 
-    public List<Object> getOptionsforBooleanField(Field field) {
+    public List<Object> getOptionsforBooleanField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(true);
         returnList.add(false);
-        returnList.add(null);
+        if (isObject)
+            returnList.add(null);
         return returnList;
     }
 

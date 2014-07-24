@@ -54,26 +54,36 @@ public class SingleObjectOptionsNode implements IOptionsNode{
             Class fieldType = field.getType();
 
             if (field.getName().equals("this$0")) {
+                //is there a better way to do this? does this even work?
                 log("found 'this'");
-                //is there a better way to do this?
             } else if (fieldType.equals(String.class)) {
                 fieldOptions.put(field, b.getOptionsForStringField(field));
             } else if (fieldType.equals(Integer.class)) { //ignore everything but string and child classes
-                fieldOptions.put(field, b.getOptionsforIntegerField(field));
+                fieldOptions.put(field, b.getOptionsforIntegerField(field, true));
+            } else if (fieldType.equals(int.class)) { //ignore everything but string and child classes
+                fieldOptions.put(field, b.getOptionsforIntegerField(field, false));
             } else if (fieldType.equals(Long.class)) {
                 //todo
             } else if (fieldType.equals(Double.class)) {
-                fieldOptions.put(field, b.getOptionsforDoubleField(field));
+                fieldOptions.put(field, b.getOptionsforDoubleField(field, true));
+            } else if (fieldType.equals(double.class)) { //ignore everything but string and child classes
+                fieldOptions.put(field, b.getOptionsforDoubleField(field, false));
             } else if (fieldType.equals(Float.class)) {
-                fieldOptions.put(field, b.getOptionsforFloatField(field));
+                fieldOptions.put(field, b.getOptionsforFloatField(field, true));
+            } else if (fieldType.equals(float.class)) { //ignore everything but string and child classes
+                fieldOptions.put(field, b.getOptionsforFloatField(field, false));
             } else if (fieldType.equals(Character.class)) {
-                fieldOptions.put(field, b.getOptionsforCharField(field));
+                fieldOptions.put(field, b.getOptionsforCharField(field, true));
+            } else if (fieldType.equals(char.class)) { //ignore everything but string and child classes
+                fieldOptions.put(field, b.getOptionsforCharField(field, false));
             } else if (fieldType.equals(Short.class)) {
                 //todo
             } else if (fieldType.equals(Byte.class)) {
                 //todo
             } else if (fieldType.equals(Boolean.class)) {
-                fieldOptions.put(field, b.getOptionsforBooleanField(field));
+                fieldOptions.put(field, b.getOptionsforBooleanField(field, true));
+            } else if (fieldType.equals(boolean.class)) { //ignore everything but string and child classes
+                fieldOptions.put(field, b.getOptionsforBooleanField(field, false));
             } else if (Collection.class.isAssignableFrom(fieldType)) {
                 log("adding field option for Collection: " + field.getName() + " depth " + depth);
                 ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();

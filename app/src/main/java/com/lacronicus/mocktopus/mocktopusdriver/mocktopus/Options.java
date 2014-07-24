@@ -76,7 +76,21 @@ public class Options {
     }
 
 
-    //call this recursively
+
+    /**
+     * this is called recursively to "inflate" the object
+     * this doesn't need to be in Options, could (should?) be taken out.
+     *
+     * this needs reworking too
+     *
+     * some notes:
+     * each created object or primitive is either the base object to be returned, or
+     * will be the contents of a field
+     *
+     * if this
+     *
+     *
+     * */
     public static Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
         log("creating a new object");
         Class<?> returnClass;
@@ -84,11 +98,9 @@ public class Options {
             returnClass = (Class<?>) returnType;
         } else {//if(childType instanceof ParameterizedType) {
             returnClass = (Class<?>) ((ParameterizedType) returnType).getRawType();
-        }
+        } //is there ever going to be something else?
         try {
-            //if this new thing is a collection, make a collection and add children
-
-            //if it's a "plain" object, make it and fill in its fields
+            //handle observable
             if (Observable.class.isAssignableFrom(returnClass)) {
                 Type containedClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 return Observable.from(createObject(containedClass, method, currentSettings));
@@ -107,6 +119,8 @@ public class Options {
                     }
                     builder.modifyList(collection);
                 } else {
+
+                    //todo what happens when this List is supposed to contain a string?
                     collection.add(createObject(containedType, method, currentSettings));
                     collection.add(createObject(containedType, method, currentSettings));
                     collection.add(createObject(containedType, method, currentSettings));
@@ -118,26 +132,41 @@ public class Options {
                 Field[] fields = returnClass.getDeclaredFields(); // todo add support for super classes here
 
                 for (int i = 0; i != fields.length; i++) {
+                    //should the contents of this loop be replaced with a call to createObject?
+                    //see todo right before
+
+
+
                     Field field = fields[i];
                     Class fieldType = field.getType();
                     if (fieldType.equals(String.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Integer.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(int.class)) {
+                        field.setInt(response, (Integer) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Long.class)) {
                         //todo
                     } else if (fieldType.equals(Double.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(double.class)) {
+                        field.setDouble(response, (Double) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Float.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(float.class)) {
+                        field.setFloat(response, (Float) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Character.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(char.class)) {
+                        field.setChar(response, (Character) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Short.class)) {
                         //todo
                     } else if (fieldType.equals(Byte.class)) {
                         //todo
                     } else if (fieldType.equals(Boolean.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(boolean.class)) {
+                        field.setBoolean(response, (Boolean) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                         // may need to explicity state what children to add
                         // what does Gson do? derp, it knows because the json already has structure, not because of any special knowledge

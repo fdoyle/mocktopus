@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionItemModel;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.model.SubredditResponse;
 
@@ -22,8 +23,8 @@ import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
-    @Inject
-    RedditService myService;
+    /*@Inject
+    RedditService redditService;*/
 
     @Inject
     FakeService fakeService;
@@ -37,20 +38,20 @@ public class MainActivity extends BaseActivity {
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         t = (TextView) findViewById(R.id.tv);
         View b = findViewById(R.id.open_config);
-        /*myService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
+        fakeService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
             @Override
             public void call(MyModel myModel) {
                 t.setText("myModel response converted to json:\n" + gson.toJson(myModel));
             }
-        });*/
+        });
 
-        myService.getSubreddit().subscribe(new Action1<SubredditResponse>() {
+        /*redditService.getSubreddit().subscribe(new Action1<SubredditResponse>() {
             @Override
             public void call(SubredditResponse subredditResponse) {
                 t.setText(gson.toJson(subredditResponse));
                 Linkify.addLinks(t, Linkify.ALL);
             }
-        });
+        });*/
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
