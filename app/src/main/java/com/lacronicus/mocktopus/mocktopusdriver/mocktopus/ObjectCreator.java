@@ -23,17 +23,8 @@ public class ObjectCreator {
 
     /**
      * this is called recursively to "inflate" the object
-     * this doesn't need to be in Options, could (should?) be taken out.
      *
-     * this needs reworking too
-     *
-     * some notes:
-     * each created object or primitive is either the base object to be returned, or
-     * will be the contents of a field
-     *
-     * if this
-     *
-     *
+     * this could use some love
      * */
     public static Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
         log("creating a new object");
