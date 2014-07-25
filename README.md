@@ -38,9 +38,12 @@ todo:
     * ignore (used to tell mocktopus to ignore certain fields that wont make sense. like if a model contains a Date or a LatLng for convenience reasons
     * string
     * int
-* list builder options/settings?
-* builders for other objects?
+* list modder options/settings?
+* modder pattern for other objects?
 * add some flavors to show how to use next to a "real" api
+* label annotations
+    * if, for example, your model fields arent "tester readable" you could give them alternate names for display in the config
+    * maybe a description instead?
 
         
 * add api passthrough (so some methods are mocked, some make real requests)
@@ -59,3 +62,4 @@ as well as providing more realistic data.
         * allowing for more customized logic in object building
         * have an "inflation" pass, then a "modification" pass
             * how would this work with passthrough? just ignore them?
+            
