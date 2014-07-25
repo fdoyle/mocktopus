@@ -17,13 +17,11 @@ public class ConfigFragmentAdapter extends FragmentPagerAdapter {
 
     public ConfigFragmentAdapter(FragmentManager fm) {
         super(fm);
-
     }
 
     public void setContent(Mocktopus mocktopus) {
         this.mocktopus = mocktopus;
         services = new ArrayList<Type>(mocktopus.getApiSet());
-
     }
 
     @Override

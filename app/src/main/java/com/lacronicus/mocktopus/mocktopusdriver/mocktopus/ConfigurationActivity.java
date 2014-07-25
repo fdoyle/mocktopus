@@ -17,10 +17,7 @@ public class ConfigurationActivity extends BaseActivity {
 
     @Inject
     Mocktopus mocktopus;
-    MockInvocationHandler handler;
-
     ViewPager vp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

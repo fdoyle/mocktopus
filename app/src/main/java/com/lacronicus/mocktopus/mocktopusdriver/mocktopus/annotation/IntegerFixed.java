@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 /**
  * Created by fdoyle on 6/20/14.
  * param: value to use as fixed value
+ *
+ * //todo change this to NumberFixed?
  */
 @Target(value = ElementType.FIELD)
 @Retention(value = RetentionPolicy.RUNTIME)

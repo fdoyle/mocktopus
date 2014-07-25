@@ -14,6 +14,11 @@ how to use
 todo:
 -----
 
+* error handling 
+    * better exception handling
+    * get other people to implement the library and see where they screw up
+        * make sure these hot spots are noted in the readme
+        * make sure these failures have good logging
 * rotation support in ConfigurationActivity
 * support lists of "Primitives" (integers, etc)
 * expand on demo reddit api
@@ -30,8 +35,6 @@ todo:
     * observable options
         * delay
         * indefinite loading?
-
-* add primitives support (support int, not just Integer)
 * add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
 * inheritance support
 * private field support
