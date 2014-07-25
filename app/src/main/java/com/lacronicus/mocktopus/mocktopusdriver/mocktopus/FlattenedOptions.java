@@ -28,8 +28,8 @@ public class FlattenedOptions {
         itemList.add(new FlatOptionsItem(new ChildObjectItem(clazz)));
     }
 
-    public void addField(Method m, Field f, List<Object> options) {
-        itemList.add(new FlatOptionsItem(new MethodFieldItem(m, f, options)));
+    public void addField(Method m, Field f, Type layerType, List<Object> options) {
+        itemList.add(new FlatOptionsItem(new MethodFieldItem(m, f, layerType, options)));
     }
 
     public void addCollection(Type type, Type parameterType) {
@@ -129,20 +129,23 @@ public class FlattenedOptions {
     public class MethodFieldItem {
         public Method method;
         public Field field;
+        public Type type;
         public List<Object> fieldOptions;
 
         //any reason options aren't just created here?
-        public MethodFieldItem(Method m, Field f, List<Object> options) {
+        public MethodFieldItem(Method m, Field f,Type t, List<Object> options) {
             this.method = m;
             this.field = f;
+            this.type = t;
             this.fieldOptions = options;
         }
 
         public String getString() {
+            Class clazz = (Class<?>) type;
             if(field != null) {
-                return "        " + field.getType().getSimpleName() + " " + field.getName();
+                return "        " + clazz.getSimpleName() + " " + field.getName();
             } else {
-                return "        no associated field";
+                return "        " + clazz.getSimpleName() + " no field name";
             }
         }
 

@@ -14,7 +14,7 @@ import rx.Observable;
  */
 public interface FakeService {
 //    public MyModel returnMyModel();
-//    public Observable<MyCollectionContainingModel> returnMyCollectionContainingModel();
+    public Observable<MyCollectionContainingModel> returnMyCollectionContainingModel();
 //    public MyCollectionExtendingModel returnMyCollectionExtendingModel(); //todo fix this one
 //    public List<MyModel> returnMyModelList();
 //    public List<List<MyModel>> returnMyModelListList();

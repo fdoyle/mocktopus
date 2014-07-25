@@ -21,6 +21,7 @@ public class LeafOptionsNode implements IOptionsNode {
     List<Object> options;
     Method method; // the method this OptionsNode is being created for
     Field field; // the field this is going into
+    Type layerType; // the type of the thing this represents
 
 
     //field may, in very rare circumstances, be null"
@@ -28,6 +29,7 @@ public class LeafOptionsNode implements IOptionsNode {
         options = new ArrayList<Object>();
         this.method = method;
         this.field = field;
+        this.layerType = layerType;
 
         if (layerType.equals(String.class)) {
             options = FieldOptionsListBuilder.getOptionsForStringField(field);
@@ -60,7 +62,7 @@ public class LeafOptionsNode implements IOptionsNode {
 
     @Override
     public void addToFlattenedOptions(FlattenedOptions flattenedOptions) {
-        flattenedOptions.addField(method, field, options);
+        flattenedOptions.addField(method, field, layerType, options);
     }
 
     @Override
