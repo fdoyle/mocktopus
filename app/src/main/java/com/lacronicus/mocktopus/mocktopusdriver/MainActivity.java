@@ -1,7 +1,6 @@
 package com.lacronicus.mocktopus.mocktopusdriver;
 
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,12 +8,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
-import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionItemModel;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
-import com.lacronicus.mocktopus.mocktopusdriver.redditservice.model.SubredditResponse;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

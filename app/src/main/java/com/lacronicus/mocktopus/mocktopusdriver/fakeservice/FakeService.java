@@ -1,8 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver.fakeservice;
 
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionContainingModel;
-import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionExtendingModel;
-import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionItemModel;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModdedModel;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 
 import java.util.ArrayList;
@@ -21,5 +20,5 @@ public interface FakeService {
     public List<List<MyModel>> returnMyModelListList();
     public ArrayList<MyModel> returnMyModelArrayList();
     public Observable<MyModel> returnMyModelObservable();
-    public Observable<List<MyCollectionItemModel>> getCustomCollection();
+    public Observable<List<MyModdedModel>> getCustomCollection();
 }
