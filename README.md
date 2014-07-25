@@ -14,6 +14,7 @@ how to use
 todo:
 -----
 
+* get a proper gitignore
 * error handling 
     * better exception handling
     * get other people to implement the library and see where they screw up
