@@ -1,6 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver;
 
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity {
 
     public void setText(Object o) {
         t.setText("myModel response converted to json:\n" + gson.toJson(o));
+        Linkify.addLinks(t, Linkify.ALL);
     }
 
     public void toast(String string) {
