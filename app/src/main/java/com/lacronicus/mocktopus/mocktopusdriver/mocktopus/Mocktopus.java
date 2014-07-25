@@ -11,24 +11,13 @@ import java.util.Set;
  */
 public class Mocktopus {
 
-    //public T service;
     public Map<Type, Object> services;
 
-    //public MockInvocationHandler handler;
     public Map<Type, MockInvocationHandler> handlers;
 
     public Mocktopus() {
-        /*handler = new MockInvocationHandler(api);*/
         handlers = new HashMap<Type, MockInvocationHandler>();
-
-
-        //todo make this generic
         services = new HashMap<Type, Object>();
-        /*service = (T) Proxy.newProxyInstance(
-                api.getClassLoader(),
-                new Class[]{api}, // is this right?
-                handler
-        );*/
     }
 
     public <T> T initApi(Class<T> api) {
@@ -51,7 +40,7 @@ public class Mocktopus {
     }
 
     public void addErrorState(String stateName, Class toReturn) {
-        //stub
+        //todo
     }
 
     public int getApiCount() {

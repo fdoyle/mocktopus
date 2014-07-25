@@ -13,6 +13,8 @@ import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionCo
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.functions.Action1;
@@ -36,21 +38,12 @@ public class MainActivity extends BaseActivity {
         gson = new GsonBuilder().setPrettyPrinting().create();
         t = (TextView) findViewById(R.id.tv);
         View b = findViewById(R.id.open_config);
-        fakeService.returnMyCollectionContainingModel().subscribe(new Action1<MyCollectionContainingModel>() {
+        fakeService.returnStringList().subscribe(new Action1<List<String>>() {
             @Override
-            public void call(MyCollectionContainingModel myCollectionContainingModel) {
-                setText(myCollectionContainingModel);
+            public void call(List<String> strings) {
+                setText(strings);
             }
         });
-
-        /*redditService.getSubreddit().subscribe(new Action1<SubredditResponse>() {
-            @Override
-            public void call(SubredditResponse subredditResponse) {
-                t.setText(gson.toJson(subredditResponse));
-                Linkify.addLinks(t, Linkify.ALL);
-            }
-        });*/
-
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -85,11 +85,9 @@ public class ObjectCreator {
                 Field[] childFields = returnClass.getDeclaredFields(); // todo add support for super classes here
 
                 for (int i = 0; i != childFields.length; i++) {
-                    //should the contents of this loop be replaced with a call to createObject?
-                    //see todo right before the collection stuff
 
-
-                    //this is an unreadable mess, fix it
+                    //todo this is an unreadable mess, fix it
+                    //break up by primitives and objects, objects should have a single call to createObject
                     Field childField = childFields[i];
                     Class fieldType = childField.getType();
                     if (fieldType.equals(String.class)) {

@@ -62,14 +62,6 @@ public class Options {
         }
     }
 
-    public void setLogLevel(LogLevel level) {
-        //todo
-    }
-
-
-
-
-
     public FlattenedOptions flatten() {
         FlattenedOptions flattenedOptions = new FlattenedOptions();
         Set<Method> methodSet = methodOptions.keySet();

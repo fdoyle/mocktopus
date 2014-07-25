@@ -11,7 +11,7 @@ import java.util.Collection;
 
 /**
  * Created by fdoyle on 7/16/14.
- * //todo combine this with OptionsNode
+ * //todo universal OptionsNode?
  * //because what if you have an object that extends List<Whatever> that also does other stuff?
  */
 public class CollectionOptionsNode implements IOptionsNode {

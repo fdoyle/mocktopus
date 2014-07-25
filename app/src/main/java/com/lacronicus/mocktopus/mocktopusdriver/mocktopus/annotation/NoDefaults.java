@@ -8,8 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * Created by fdoyle on 7/10/14.
- * dont show defaults as options, just ones that are specifically added
- *
+ * dont show defaults as options, just ones that are added by additional annotations
  * //todo implement
  */
 @Target(value = ElementType.FIELD)
