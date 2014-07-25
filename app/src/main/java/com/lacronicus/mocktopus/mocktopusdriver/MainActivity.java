@@ -23,8 +23,8 @@ import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
-    /*@Inject
-    RedditService redditService;*/
+    @Inject
+    RedditService redditService;
 
     @Inject
     FakeService fakeService;

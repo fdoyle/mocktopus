@@ -5,19 +5,19 @@ package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
  */
 public class MyModel {
     public MyStringDemoModel child;
-    public String myString;
-    public String myString2;
-    public Integer myInteger;
-    public Double myDouble;
-    public Float myFloat;
-    public Character myChar;
-    public Boolean myBool;
-    public Long myLong;
-    public int myInt;
-    public float myFlo;
-    public char myCha;
-    public boolean myBoo;
-    public long myLon;
+    public String oString;
+    public String oString2;
+    public Integer oInteger;
+    public Double oDouble;
+    public Float oFloat;
+    public Character oCharacter;
+    public Boolean oBool;
+    public Long oLong;
+    public int pInt;
+    public float pFloat;
+    public char pChar;
+    public boolean pBoolean;
+    public long pLong;
 
     //no short
     //no byte

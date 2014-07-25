@@ -28,10 +28,6 @@ public class ConfigurationActivity extends BaseActivity {
         adapter.setContent(mocktopus);
         adapter.notifyDataSetChanged();
         vp.setAdapter(adapter);
-
-
-
-        //Log.d("TAG","myService.returnMyModel().myString = " + myService.returnMyModel().myString);
     }
 
 
