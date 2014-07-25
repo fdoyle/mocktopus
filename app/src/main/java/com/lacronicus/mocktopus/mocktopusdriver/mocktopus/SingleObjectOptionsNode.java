@@ -88,8 +88,6 @@ public class SingleObjectOptionsNode implements IOptionsNode{
             } else if (Collection.class.isAssignableFrom(fieldType)) {
                 log("adding field option for Collection: " + field.getName() + " depth " + depth);
                 ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
-                Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
-                //Collection collection = (Collection) field.get(response);
                 childCollectionOptions.put(field, new CollectionOptionsNode(method, listParameterizedType, depth + 1));
             } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                 log("adding field option for child Object" + field.getName());

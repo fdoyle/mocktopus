@@ -17,8 +17,8 @@ public class CollectionOptionsNode implements IOptionsNode{
     Type parameterType;
 
     public CollectionOptionsNode(Method m, Type myType,int depth) {
-        Class<?> childClass;
         Type childType = ((ParameterizedType) myType).getActualTypeArguments()[0];
+        Class<?> childClass;
         if(childType instanceof Class) {
             childClass = (Class<?>) childType;
         } else {//if(childType instanceof ParameterizedType) {
@@ -27,7 +27,6 @@ public class CollectionOptionsNode implements IOptionsNode{
 
         //what if this contains "leaf" objects
         if(Collection.class.isAssignableFrom(childClass)) {
-            ParameterizedType childParameterizedType = (ParameterizedType) childType;
             node = new CollectionOptionsNode(m, childType, depth +1);
         } else {
             //assume that it contains plain objects
