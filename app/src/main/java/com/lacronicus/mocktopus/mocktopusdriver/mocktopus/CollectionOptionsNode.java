@@ -16,17 +16,19 @@ public class CollectionOptionsNode implements IOptionsNode{
     Type containerType;
     Type parameterType;
 
-    public CollectionOptionsNode(Method m, Type myType, Type childType, int depth) {
+    public CollectionOptionsNode(Method m, Type myType,int depth) {
         Class<?> childClass;
+        Type childType = ((ParameterizedType) myType).getActualTypeArguments()[0];
         if(childType instanceof Class) {
             childClass = (Class<?>) childType;
         } else {//if(childType instanceof ParameterizedType) {
             childClass = (Class<?>) ((ParameterizedType) childType).getRawType();
         }
 
+        //what if this contains "leaf" objects
         if(Collection.class.isAssignableFrom(childClass)) {
             ParameterizedType childParameterizedType = (ParameterizedType) childType;
-            node = new CollectionOptionsNode(m, childType, childParameterizedType.getActualTypeArguments()[0], depth +1);
+            node = new CollectionOptionsNode(m, childType, depth +1);
         } else {
             //assume that it contains plain objects
             node = new SingleObjectOptionsNode(m, (Class<?>) childType, depth + 1);//do this if this represents a collection of plain objects

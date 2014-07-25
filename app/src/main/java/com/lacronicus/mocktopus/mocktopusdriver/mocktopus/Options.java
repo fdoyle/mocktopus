@@ -54,7 +54,7 @@ public class Options {
 
                 //ParameterizedType methodReturnClass = (ParameterizedType) method.getReturnType().getGenericSuperclass();//works on things that extend List<Object>
                 Type listType = methodReturnType.getActualTypeArguments()[0];//learn what's going on here
-                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnType, listType, 0));
+                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnType, 0));
             } else {
                 methodOptions.put(method, new SingleObjectOptionsNode(method, returnClass, 0));
             }

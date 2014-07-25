@@ -25,7 +25,7 @@ public class ObservableOptionsNode implements IOptionsNode {
 
         if(Collection.class.isAssignableFrom(childClass)) {
             ParameterizedType childParameterizedType = (ParameterizedType) childType;
-            childNode = new CollectionOptionsNode(m, childType, childParameterizedType.getActualTypeArguments()[0], depth +1);
+            childNode = new CollectionOptionsNode(m, childType, depth +1);
         } else {
             //assume that it contains plain objects
             childNode = new SingleObjectOptionsNode(m, (Class<?>) childType, depth + 1);//do this if this represents a collection of plain objects

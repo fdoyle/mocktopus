@@ -33,12 +33,12 @@ public class MainActivity extends BaseActivity {
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         t = (TextView) findViewById(R.id.tv);
         View b = findViewById(R.id.open_config);
-        fakeService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
+        /*fakeService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
             @Override
             public void call(MyModel myModel) {
                 t.setText("myModel response converted to json:\n" + gson.toJson(myModel));
             }
-        });
+        });*/
 
         /*redditService.getSubreddit().subscribe(new Action1<SubredditResponse>() {
             @Override

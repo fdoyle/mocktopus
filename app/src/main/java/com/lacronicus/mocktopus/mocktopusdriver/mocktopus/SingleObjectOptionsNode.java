@@ -48,6 +48,9 @@ public class SingleObjectOptionsNode implements IOptionsNode{
         this.depth = depth;
         Field[] fields = layerClass.getDeclaredFields();
         FieldOptionsListBuilder b = new FieldOptionsListBuilder();
+        //what if this is the "leaf" object? like a String or an Integer
+
+
         for (int i = 0; i != fields.length; i++) {
             Field field = fields[i];
 
@@ -87,7 +90,7 @@ public class SingleObjectOptionsNode implements IOptionsNode{
                 ParameterizedType listParameterizedType = (ParameterizedType) field.getGenericType();
                 Class<?> listClass = (Class<?>) listParameterizedType.getActualTypeArguments()[0];//learn what's going on here
                 //Collection collection = (Collection) field.get(response);
-                childCollectionOptions.put(field, new CollectionOptionsNode(method, fieldType, listClass, depth + 1));
+                childCollectionOptions.put(field, new CollectionOptionsNode(method, listParameterizedType, depth + 1));
             } else { // best way to determine child classes? what if it contains an Activity for some awful reason?
                 log("adding field option for child Object" + field.getName());
                 childOptions.put(field, new SingleObjectOptionsNode(method, fieldType, depth + 1));

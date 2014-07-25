@@ -2,6 +2,7 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -14,9 +15,11 @@ public class OptionsAdapter extends BaseExpandableListAdapter {
     FlattenedOptions options;
 
     Context c;
+    LayoutInflater inflater;
 
     public OptionsAdapter(Context c) {
         this.c = c;
+        inflater = LayoutInflater.from(c);
     }
 
     public void setContent(FlattenedOptions options) {
@@ -139,6 +142,5 @@ public class OptionsAdapter extends BaseExpandableListAdapter {
     public int getChildTypeCount() {
         return super.getChildTypeCount();
     }
-
 
 }
