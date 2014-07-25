@@ -12,10 +12,16 @@ public class MyModel {
     public Float myFloat;
     public Character myChar;
     public Boolean myBool;
+    public Long myLong;
     public int myInt;
     public float myFlo;
     public char myCha;
     public boolean myBoo;
+    public long myLon;
+
+    //no short
+    //no byte
+    //necessary?
 
     //todo what if this contains another MyModel?
 

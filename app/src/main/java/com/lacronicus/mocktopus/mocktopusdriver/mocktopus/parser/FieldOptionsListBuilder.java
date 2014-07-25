@@ -60,7 +60,6 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-
     public List<Object> getOptionsforIntegerField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1);
@@ -71,6 +70,15 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
+    public List<Object> getOptionsforLongField(Field field, boolean isObject) {
+        List<Object> returnList = new ArrayList<Object>();
+        returnList.add(1L);
+        returnList.add(-1L);
+        returnList.add(0L);
+        if (isObject)
+            returnList.add(null);
+        return returnList;
+    }
 
     public List<Object> getOptionsforDoubleField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
@@ -109,7 +117,4 @@ public class FieldOptionsListBuilder {
             returnList.add(null);
         return returnList;
     }
-
-
-    //todo other types?
 }

@@ -23,9 +23,9 @@ public class ObjectCreator {
 
     /**
      * this is called recursively to "inflate" the object
-     *
+     * <p/>
      * this could use some love
-     * */
+     */
     public static Object createObject(Type returnType, Method method, FieldSettings currentSettings) {
         log("creating a new object");
         Class<?> returnClass;
@@ -44,12 +44,12 @@ public class ObjectCreator {
                 List<Object> collection = new ArrayList<Object>();
                 Type containedType = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 log("adding three items to collection");
-                if(containedType instanceof Class<?> && ((Class<?>) containedType).isAnnotationPresent(ListModder.class)) {
+                if (containedType instanceof Class<?> && ((Class<?>) containedType).isAnnotationPresent(ListModder.class)) {
                     Class containedClass = (Class<?>) containedType;
                     ListModder builderAnnotation = (ListModder) containedClass.getAnnotation(ListModder.class);
                     IListModder builder = builderAnnotation.value().newInstance();
                     int count = builder.getCount();
-                    for(int i = 0; i != count; i++) {
+                    for (int i = 0; i != count; i++) {
                         collection.add(createObject(containedType, method, currentSettings));
                     }
                     builder.modifyList(collection);
@@ -74,10 +74,10 @@ public class ObjectCreator {
 
                 for (int i = 0; i != fields.length; i++) {
                     //should the contents of this loop be replaced with a call to createObject?
-                    //see todo right before
+                    //see todo right before the collection stuff
 
 
-
+                    //this is an unreadable mess, fix it
                     Field field = fields[i];
                     Class fieldType = field.getType();
                     if (fieldType.equals(String.class)) {
@@ -87,7 +87,9 @@ public class ObjectCreator {
                     } else if (fieldType.equals(int.class)) {
                         field.setInt(response, (Integer) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Long.class)) {
-                        //todo
+                        field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
+                    } else if (fieldType.equals(long.class)) {
+                        field.setLong(response, (Long) currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(Double.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(double.class)) {
@@ -100,10 +102,6 @@ public class ObjectCreator {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(char.class)) {
                         field.setChar(response, (Character) currentSettings.get(new Pair<Method, Field>(method, field)));
-                    } else if (fieldType.equals(Short.class)) {
-                        //todo
-                    } else if (fieldType.equals(Byte.class)) {
-                        //todo
                     } else if (fieldType.equals(Boolean.class)) {
                         field.set(response, currentSettings.get(new Pair<Method, Field>(method, field)));
                     } else if (fieldType.equals(boolean.class)) {
