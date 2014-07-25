@@ -33,6 +33,8 @@ todo:
 
 * add primitives support (support int, not just Integer)
 * add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
+* inheritance support
+* private field support
 * add callback support (for better retrofit support)
 * more annotations?
     * ignore (used to tell mocktopus to ignore certain fields that wont make sense. like if a model contains a Date or a LatLng for convenience reasons
