@@ -1,12 +1,9 @@
 package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 
-import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.options.Options;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by fdoyle on 7/10/14.
@@ -29,7 +26,7 @@ public class MockInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return ObjectCreator.createObject(method.getGenericReturnType(), method, null,  settings);
+        return ObjectCreator.createObject(method.getGenericReturnType(), method, null, settings);
     }
 
     public Options getOptions() {

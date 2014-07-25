@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListModder;
 import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.modder.IListModder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.options.Options;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -73,13 +74,6 @@ public class ObjectCreator {
                     builder.modifyList(collection);
                 } else {
 
-                    //todo what happens when this List is supposed to contain a string? createObject won't handle it
-                    //maybe that should be a special case?
-                    //or should createObject be able to handle that?
-                    //how would configuration work in that case?
-                    //maybe that's what list options should be
-                    //if it's a "primitive" list, itll have the same settings the primitives would have
-                    //otherwise it has List settings?
                     collection.add(createObject(containedType, method,f, currentSettings));
                     collection.add(createObject(containedType, method,f, currentSettings));
                     collection.add(createObject(containedType, method,f, currentSettings));
@@ -133,8 +127,10 @@ public class ObjectCreator {
                 return response;
             }
         } catch (InstantiationException e) {
+            log("failed to instantiate");
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            log("failed to access, are all of your fields public?"); // way around this issue?
             e.printStackTrace();
         }
 

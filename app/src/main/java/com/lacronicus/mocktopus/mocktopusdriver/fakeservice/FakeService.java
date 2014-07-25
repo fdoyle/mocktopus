@@ -13,12 +13,12 @@ import rx.Observable;
  * Created by fdoyle on 7/10/14.
  */
 public interface FakeService {
-    public MyModel returnMyModel();
-    public MyCollectionContainingModel returnMyCollectionContainingModel();
+//    public MyModel returnMyModel();
+    public Observable<MyCollectionContainingModel> returnMyCollectionContainingModel();
 //    public MyCollectionExtendingModel returnMyCollectionExtendingModel(); //todo fix this one
-    public List<MyModel> returnMyModelList();
-    public List<List<MyModel>> returnMyModelListList();
-    public ArrayList<MyModel> returnMyModelArrayList();
-    public Observable<MyModel> returnMyModelObservable();
-    public Observable<List<MyModdedModel>> getCustomCollection();
+//    public List<MyModel> returnMyModelList();
+//    public List<List<MyModel>> returnMyModelListList();
+//    public ArrayList<MyModel> returnMyModelArrayList();
+//    public Observable<MyModel> returnMyModelObservable();
+//    public Observable<List<MyModdedModel>> getCustomCollection();
 }

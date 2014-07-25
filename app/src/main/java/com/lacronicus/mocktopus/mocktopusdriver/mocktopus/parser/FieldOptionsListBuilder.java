@@ -22,32 +22,33 @@ import java.util.List;
  */
 public class FieldOptionsListBuilder {
 
-    public List<Object> getOptionsForStringField(Field field) {
+    public static List<Object> getOptionsForStringField(Field field) {
         List<Object> returnList = new ArrayList<Object>();
 
         //todo sane ordering of annotations? which ones are most important and should be default
 
+        if(field != null) {
+            if (field.isAnnotationPresent(StringFixed.class)) {
+                StringFixed fixed = field.getAnnotation(StringFixed.class);
+                returnList.add(fixed.value());
+            }
+            if (field.isAnnotationPresent(StringDate.class)) {
+                String formatString = field.getAnnotation(StringDate.class).value();
+                SimpleDateFormat format = new SimpleDateFormat(formatString);
+                String dateString = format.format(new Date());
+                returnList.add(dateString);
 
-        if (field.isAnnotationPresent(StringFixed.class)) {
-            StringFixed fixed = field.getAnnotation(StringFixed.class);
-            returnList.add(fixed.value());
-        }
-        if (field.isAnnotationPresent(StringDate.class)) {
-            String formatString = field.getAnnotation(StringDate.class).value();
-            SimpleDateFormat format = new SimpleDateFormat(formatString);
-            String dateString = format.format(new Date());
-            returnList.add(dateString);
 
+            }
+            if (field.isAnnotationPresent(StringImageUrl.class)) {
+                StringImageUrl fixed = field.getAnnotation(StringImageUrl.class);
+                returnList.add(fixed.value());
+            }
 
-        }
-        if (field.isAnnotationPresent(StringImageUrl.class)) {
-            StringImageUrl fixed = field.getAnnotation(StringImageUrl.class);
-            returnList.add(fixed.value());
-        }
-
-        if (field.isAnnotationPresent(StringWebpageUrl.class)) {
-            StringWebpageUrl fixed = field.getAnnotation(StringWebpageUrl.class);
-            returnList.add(fixed.value());
+            if (field.isAnnotationPresent(StringWebpageUrl.class)) {
+                StringWebpageUrl fixed = field.getAnnotation(StringWebpageUrl.class);
+                returnList.add(fixed.value());
+            }
         }
 
         returnList.add("Simple String");
@@ -60,7 +61,7 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforIntegerField(Field field, boolean isObject) {
+    public static List<Object> getOptionsforIntegerField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1);
         returnList.add(-1);
@@ -70,7 +71,7 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforLongField(Field field, boolean isObject) {
+    public static List<Object> getOptionsforLongField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1L);
         returnList.add(-1L);
@@ -80,7 +81,7 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforDoubleField(Field field, boolean isObject) {
+    public static List<Object> getOptionsforDoubleField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1.0);
         returnList.add(-1.0);
@@ -90,7 +91,7 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforFloatField(Field field, boolean isObject) {
+    public static List<Object> getOptionsforFloatField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(1f);
         returnList.add(-1f);
@@ -100,7 +101,7 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforCharField(Field field, boolean isObject) {
+    public static List<Object> getOptionsforCharField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add('a');
         returnList.add('\n');
@@ -109,7 +110,7 @@ public class FieldOptionsListBuilder {
         return returnList;
     }
 
-    public List<Object> getOptionsforBooleanField(Field field, boolean isObject) {
+    public static List<Object> getOptionsforBooleanField(Field field, boolean isObject) {
         List<Object> returnList = new ArrayList<Object>();
         returnList.add(true);
         returnList.add(false);

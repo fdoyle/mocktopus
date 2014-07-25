@@ -139,7 +139,11 @@ public class FlattenedOptions {
         }
 
         public String getString() {
-            return "        " + field.getType().getSimpleName() + " " + field.getName();
+            if(field != null) {
+                return "        " + field.getType().getSimpleName() + " " + field.getName();
+            } else {
+                return "        no associated field";
+            }
         }
 
         public Pair<Method, Field> getPair() {

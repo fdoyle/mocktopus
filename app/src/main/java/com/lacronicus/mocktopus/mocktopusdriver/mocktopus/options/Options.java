@@ -1,6 +1,10 @@
-package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
+package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.options;
 
 import android.util.Log;
+
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.FieldSettings;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.FlattenedOptions;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.Tag;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -51,9 +55,9 @@ public class Options {
                 log("return type is collection: " + returnClass.getSimpleName());
 
                 ParameterizedType methodReturnType = (ParameterizedType) method.getGenericReturnType(); //this works for things that are List<Object>
-                methodOptions.put(method, new CollectionOptionsNode(method, methodReturnType, 0));
+                methodOptions.put(method, new CollectionOptionsNode(method, null, methodReturnType, 0));
             } else {
-                methodOptions.put(method, new SingleObjectOptionsNode(method, returnClass, 0));
+                methodOptions.put(method, new ModelOptionsNode(method, returnClass, 0));
             }
         }
     }

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class MyCollectionContainingModel {
 
-    List<Integer> integerList;
-    ArrayList<String> stringList;
-    List<MyModel> myModelList;
+    public List<Integer> integerList;
+    public ArrayList<String> stringList;
+    public List<MyModel> myModelList;
 }

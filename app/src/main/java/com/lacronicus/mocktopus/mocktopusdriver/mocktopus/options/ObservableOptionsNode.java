@@ -1,4 +1,7 @@
-package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
+package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.options;
+
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.FieldSettings;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.FlattenedOptions;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -24,10 +27,10 @@ public class ObservableOptionsNode implements IOptionsNode {
         }
 
         if(Collection.class.isAssignableFrom(childClass)) {
-            childNode = new CollectionOptionsNode(m, childType, depth +1);
+            childNode = new CollectionOptionsNode(m, null, childType, depth +1);
         } else {
             //assume that it contains plain objects
-            childNode = new SingleObjectOptionsNode(m, (Class<?>) childType, depth + 1);//do this if this represents a collection of plain objects
+            childNode = new ModelOptionsNode(m, (Class<?>) childType, depth + 1);//do this if this represents a collection of plain objects
         }
         this.parameterType = childType;
         this.containerType = myType;

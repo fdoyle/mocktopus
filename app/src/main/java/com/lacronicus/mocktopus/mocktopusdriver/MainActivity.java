@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
+import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionContainingModel;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 
@@ -25,20 +26,21 @@ public class MainActivity extends BaseActivity {
     FakeService fakeService;
 
     TextView t;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson = new GsonBuilder().setPrettyPrinting().create();
         t = (TextView) findViewById(R.id.tv);
         View b = findViewById(R.id.open_config);
-        /*fakeService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
+        fakeService.returnMyCollectionContainingModel().subscribe(new Action1<MyCollectionContainingModel>() {
             @Override
-            public void call(MyModel myModel) {
-                t.setText("myModel response converted to json:\n" + gson.toJson(myModel));
+            public void call(MyCollectionContainingModel myCollectionContainingModel) {
+                setText(myCollectionContainingModel);
             }
-        });*/
+        });
 
         /*redditService.getSubreddit().subscribe(new Action1<SubredditResponse>() {
             @Override
@@ -57,6 +59,9 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void setText(Object o) {
+        t.setText("myModel response converted to json:\n" + gson.toJson(o));
+    }
 
     public void toast(String string) {
         Toast.makeText(MainActivity.this, string, Toast.LENGTH_SHORT).show();
