@@ -1,22 +1,21 @@
 package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListBuilder;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.builder.IListBuilder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListModder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.modder.IListModder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by fdoyle on 7/24/14.
  */
-@ListBuilder(MyCollectionItemModel.MyModelListBuilder.class)
+@ListModder(MyCollectionItemModel.MyModelListModder.class)
 public class MyCollectionItemModel {
     public String myString1;
     public String myString2;
     public String myString3;
     public String position;
 
-    public static class MyModelListBuilder implements IListBuilder<MyCollectionItemModel> {
+    public static class MyModelListModder implements IListModder<MyCollectionItemModel> {
         @Override
         public int getCount() {
             return 10;

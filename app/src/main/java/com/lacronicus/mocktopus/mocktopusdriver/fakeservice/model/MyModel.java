@@ -1,11 +1,5 @@
 package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListBuilder;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.builder.IListBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by fdoyle on 7/14/14.
  */

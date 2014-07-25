@@ -1,4 +1,4 @@
-package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.builder;
+package com.lacronicus.mocktopus.mocktopusdriver.mocktopus.modder;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * this "builder" allows you to modify the list after it has been created, creating some variety in the list items
  */
-public interface IListBuilder<T> {
+public interface IListModder<T> {
 
     //defines how long the
     public int getCount();

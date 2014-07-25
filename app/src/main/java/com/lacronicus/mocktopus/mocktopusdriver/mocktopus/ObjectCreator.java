@@ -3,8 +3,8 @@ package com.lacronicus.mocktopus.mocktopusdriver.mocktopus;
 import android.util.Log;
 import android.util.Pair;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListBuilder;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.builder.IListBuilder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.collection.ListModder;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.modder.IListModder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -44,10 +44,10 @@ public class ObjectCreator {
                 List<Object> collection = new ArrayList<Object>();
                 Type containedType = ((ParameterizedType) returnType).getActualTypeArguments()[0];
                 log("adding three items to collection");
-                if(containedType instanceof Class<?> && ((Class<?>) containedType).isAnnotationPresent(ListBuilder.class)) {
+                if(containedType instanceof Class<?> && ((Class<?>) containedType).isAnnotationPresent(ListModder.class)) {
                     Class containedClass = (Class<?>) containedType;
-                    ListBuilder builderAnnotation = (ListBuilder) containedClass.getAnnotation(ListBuilder.class);
-                    IListBuilder builder = builderAnnotation.value().newInstance();
+                    ListModder builderAnnotation = (ListModder) containedClass.getAnnotation(ListModder.class);
+                    IListModder builder = builderAnnotation.value().newInstance();
                     int count = builder.getCount();
                     for(int i = 0; i != count; i++) {
                         collection.add(createObject(containedType, method, currentSettings));
@@ -55,8 +55,13 @@ public class ObjectCreator {
                     builder.modifyList(collection);
                 } else {
 
-                    //todo what happens when this List is supposed to contain a string?
-                    //createObject can't handle a state where it needs to return a String
+                    //todo what happens when this List is supposed to contain a string? createObject won't handle it
+                    //maybe that should be a special case?
+                    //or should createObject be able to handle that?
+                    //how would configuration work in that case?
+                    //maybe that's what list options should be
+                    //if it's a "primitive" list, itll have the same settings the primitives would have
+                    //otherwise it has List settings?
                     collection.add(createObject(containedType, method, currentSettings));
                     collection.add(createObject(containedType, method, currentSettings));
                     collection.add(createObject(containedType, method, currentSettings));

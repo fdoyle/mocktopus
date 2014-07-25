@@ -39,6 +39,7 @@ todo:
     * string
     * int
 * list builder options/settings?
+* builders for other objects?
 * add some flavors to show how to use next to a "real" api
 
         
@@ -50,3 +51,11 @@ instead of an object builder, you use an object modifier that iterates through
 all the fields in the response and modifies them to be the values set in the settings object, 
 ignoring fields set to "passthrough." This would make working with recursive objects easier, 
 as well as providing more realistic data.
+
+* how should this deal with recursive objects?
+    * brute force depth limit ("works" but not really intelligent)
+    * modders for plain objects?
+        * "Modders" modify an object after it has been inflated
+        * allowing for more customized logic in object building
+        * have an "inflation" pass, then a "modification" pass
+            * how would this work with passthrough? just ignore them?
