@@ -44,7 +44,7 @@ public class FlattenedOptions {
     public class FlatOptionsItem {
         public static final int TYPE_INVALID = -1;
         public static final int TYPE_METHOD = 0;
-        public static final int TYPE_CHILD = 1;
+        public static final int TYPE_CLASS = 1;
         public static final int TYPE_FIELD = 2;
         public static final int TYPE_COLLECTION = 3;
         public static final int TYPE_OBSERVABLE = 4;
@@ -79,7 +79,7 @@ public class FlattenedOptions {
             if (methodItem != null) {
                 return TYPE_METHOD;
             } else if (childObjectItem != null) {
-                return TYPE_CHILD;
+                return TYPE_CLASS;
             } else if (methodFieldItem != null) {
                 return TYPE_FIELD;
             } else if (collectionObjectItem != null) {
@@ -95,7 +95,7 @@ public class FlattenedOptions {
             switch (getType()) {
                 case TYPE_METHOD:
                     return methodItem.getString();
-                case TYPE_CHILD:
+                case TYPE_CLASS:
                     return childObjectItem.getString();
                 case TYPE_FIELD:
                     return methodFieldItem.getString();

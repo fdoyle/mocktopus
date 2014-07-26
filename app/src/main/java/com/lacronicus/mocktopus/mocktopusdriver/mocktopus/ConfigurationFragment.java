@@ -30,7 +30,6 @@ public class ConfigurationFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lv = (ExpandableListView) view.findViewById(R.id.lv);
-
         final OptionsAdapter adapter = new OptionsAdapter(getActivity());
         adapter.setContent(handler.getFlattenedOptions());
         lv.setAdapter(adapter);
@@ -47,13 +46,8 @@ public class ConfigurationFragment extends Fragment {
                         break;
 
                 }
-
-
                 return true;
             }
         });
-
     }
-
-
 }

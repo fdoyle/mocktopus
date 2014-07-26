@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.lacronicus.mocktopus.mocktopusdriver.R;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.view.ItemClassView;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.view.ItemFieldView;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.view.ItemMethodView;
+import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.view.ItemOptionView;
+
 /**
  * Created by fdoyle on 7/15/14.
  */
@@ -43,7 +49,7 @@ public class OptionsAdapter extends BaseExpandableListAdapter {
                 return 0;//todo
             case FlattenedOptions.FlatOptionsItem.TYPE_COLLECTION:
                 return 0;//todo
-            case FlattenedOptions.FlatOptionsItem.TYPE_CHILD:
+            case FlattenedOptions.FlatOptionsItem.TYPE_CLASS:
                 return 0;//todo
             case FlattenedOptions.FlatOptionsItem.TYPE_FIELD:
                 return getGroup(groupPosition).methodFieldItem.fieldOptions.size();
@@ -80,17 +86,50 @@ public class OptionsAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        TextView t = new TextView(c);
-        t.setText(options.itemList.get(groupPosition).getString());
-        if (getGroupType(groupPosition) == FlattenedOptions.FlatOptionsItem.TYPE_METHOD) {
-            t.setTypeface(null, Typeface.BOLD);
+        FlattenedOptions.FlatOptionsItem item = options.itemList.get(groupPosition);
+        switch (getGroupType(groupPosition)) {
+            case FlattenedOptions.FlatOptionsItem.TYPE_METHOD:
+
+                ItemMethodView methodView;
+                if(convertView == null) {
+                    methodView = (ItemMethodView) inflater.inflate(R.layout.mock_item_method, parent, false);
+                } else {
+                    methodView = (ItemMethodView) convertView;
+                }
+                methodView.text.setText(item.getString());
+
+                return methodView;
+            case FlattenedOptions.FlatOptionsItem.TYPE_OBSERVABLE:
+            case FlattenedOptions.FlatOptionsItem.TYPE_COLLECTION:
+            case FlattenedOptions.FlatOptionsItem.TYPE_CLASS:
+                ItemClassView classView;
+                if(convertView == null) {
+                    classView = (ItemClassView) inflater.inflate(R.layout.mock_item_class, parent, false);
+                } else {
+                    classView = (ItemClassView) convertView;
+                }
+                classView.text.setText(item.getString());
+
+                return classView;
+            case FlattenedOptions.FlatOptionsItem.TYPE_FIELD:
+                ItemFieldView fieldView;
+                if(convertView == null) {
+                    fieldView = (ItemFieldView) inflater.inflate(R.layout.mock_item_field, parent, false);
+                } else {
+                    fieldView = (ItemFieldView) convertView;
+                }
+                fieldView.text.setText(item.getString());
+
+                return fieldView;
+            case FlattenedOptions.FlatOptionsItem.TYPE_INVALID:
+            default:
+                return null;
         }
-        t.setPadding(80, 20, 20, 20);
-        return t;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        FlattenedOptions.FlatOptionsItem item = options.itemList.get(groupPosition);
         TextView t = new TextView(c);
         t.setPadding(20, 20, 20, 20);
         FlattenedOptions.FlatOptionsItem group = getGroup(groupPosition);
@@ -101,15 +140,20 @@ public class OptionsAdapter extends BaseExpandableListAdapter {
                 break;
             case FlattenedOptions.FlatOptionsItem.TYPE_COLLECTION:
                 break;
-            case FlattenedOptions.FlatOptionsItem.TYPE_CHILD:
+            case FlattenedOptions.FlatOptionsItem.TYPE_CLASS:
                 break;
             case FlattenedOptions.FlatOptionsItem.TYPE_FIELD:
-                Object childObject = group.methodFieldItem.fieldOptions.get(childPosition);
-                t.setText(String.valueOf(childObject));
-                break;
+                ItemOptionView optionView;
+                if(convertView == null) {
+                    optionView = (ItemOptionView) inflater.inflate(R.layout.mock_item_option, parent, false);
+                } else {
+                    optionView = (ItemOptionView) convertView;
+                }
+                Object option = group.methodFieldItem.fieldOptions.get(childPosition);
+                optionView.text.setText(String.valueOf(option));
+                return optionView;
             case FlattenedOptions.FlatOptionsItem.TYPE_INVALID:
             default:
-                t.setText("invalid");
                 break;
         }
         return t;
