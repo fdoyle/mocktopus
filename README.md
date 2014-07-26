@@ -20,9 +20,12 @@ todo:
     * get other people to implement the library and see where they screw up
         * make sure these hot spots are noted in the readme
         * make sure these failures have good logging
+* full logging support
+    * interface parsing
+    * object generation
 * rotation support in ConfigurationActivity
 * support lists of "Primitives" (integers, etc)
-* expand on demo reddit api
+* expand on demo reddit api - get a feel for how to integrate with various apis and prove it's capable of doing so
     * story detail
     * user detail
 * improve demo 
@@ -39,7 +42,7 @@ todo:
 * add recursive child limits (if MyObject contains a MyObject, tries to add more forever. depth limit?)
 * inheritance support
 * private field support
-* add callback support (for better retrofit support)
+* add callback support (for better retrofit support) - do people use this? kinda leaky iirc
 * more annotations?
     * ignore (used to tell mocktopus to ignore certain fields that wont make sense. like if a model contains a Date or a LatLng for convenience reasons
     * string
