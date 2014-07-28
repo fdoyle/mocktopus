@@ -15,8 +15,6 @@ import javax.inject.Inject;
  */
 public class ConfigurationActivity extends BaseActivity {
 
-    @Inject
-    Mocktopus mocktopus;
     ViewPager vp;
 
     @Override
@@ -25,7 +23,7 @@ public class ConfigurationActivity extends BaseActivity {
         setContentView(R.layout.activity_mock_settings);
         vp = (ViewPager) findViewById(R.id.vp);
         ConfigFragmentAdapter adapter = new ConfigFragmentAdapter(getSupportFragmentManager());
-        adapter.setContent(mocktopus);
+        adapter.setContent(Mocktopus.getInstance());
         adapter.notifyDataSetChanged();
         vp.setAdapter(adapter);
     }

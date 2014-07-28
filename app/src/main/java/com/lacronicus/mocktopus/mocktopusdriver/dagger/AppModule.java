@@ -57,23 +57,18 @@ public class AppModule {
         return new Gson();
     }
 
-    @Provides
-    @Singleton
-    Mocktopus provideMocktopus() {
-        return new Mocktopus();
-    }
 
     @Provides
     @Singleton
-    FakeService provideFakeService(Mocktopus mocktopus) {
-        return mocktopus.initApi(FakeService.class);
+    FakeService provideFakeService() {
+        return Mocktopus.getInstance().initApi(FakeService.class);
     }
 
 
     @Provides
     @Singleton
-    RedditService provideRedditService(Mocktopus mocktopus) {
-        return mocktopus.initApi(RedditService.class);
+    RedditService provideRedditService() {
+        return Mocktopus.getInstance().initApi(RedditService.class);
     }
 
 }

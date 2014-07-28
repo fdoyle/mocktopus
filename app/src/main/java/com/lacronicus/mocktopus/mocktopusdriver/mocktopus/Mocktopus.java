@@ -11,13 +11,23 @@ import java.util.Set;
  */
 public class Mocktopus {
 
+    static Mocktopus mocktopus;
+
     public Map<Type, Object> services;
 
     public Map<Type, MockInvocationHandler> handlers;
 
-    public Mocktopus() {
+    private Mocktopus() {
         handlers = new HashMap<Type, MockInvocationHandler>();
         services = new HashMap<Type, Object>();
+    }
+
+
+    public static Mocktopus getInstance() {
+        if(mocktopus == null) {
+            mocktopus = new Mocktopus();
+        }
+        return mocktopus;
     }
 
     public <T> T initApi(Class<T> api) {

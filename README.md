@@ -54,6 +54,9 @@ todo:
     * if, for example, your model fields arent "tester readable" you could give them alternate names for display in the config
     * maybe a description instead?
 
+
+Proposals
+---------
         
 * add api passthrough (so some methods are mocked, some make real requests)
 
@@ -72,3 +75,11 @@ as well as providing more realistic data.
         * have an "inflation" pass, then a "modification" pass
             * how would this work with passthrough? just ignore them?
             
+            
+            
+
+* mocktopus "contexts"
+    * large apps may use 5+ distinct services, each activity may only use 1-2, provide activities a way to open just relevent services
+    
+* does it really have to be a singleton?
+    * if it's not, there's probably going to be a lot of boilerplate code for a user to write. more work for everyone to enable a use case that I can't think of much less ever actually needed? sounds not worth it
