@@ -38,10 +38,16 @@ public class MainActivity extends BaseActivity {
         gson = new GsonBuilder().setPrettyPrinting().create();
         t = (TextView) findViewById(R.id.tv);
         View b = findViewById(R.id.open_config);
-        fakeService.returnStringList().subscribe(new Action1<List<String>>() {
+        /*fakeService.returnStringList().subscribe(new Action1<List<String>>() {
             @Override
             public void call(List<String> strings) {
                 setText(strings);
+            }
+        });*/
+        fakeService.returnMyModelObservable().subscribe(new Action1<MyModel>() {
+            @Override
+            public void call(MyModel myModel) {
+                setText(myModel);
             }
         });
         b.setOnClickListener(new View.OnClickListener() {

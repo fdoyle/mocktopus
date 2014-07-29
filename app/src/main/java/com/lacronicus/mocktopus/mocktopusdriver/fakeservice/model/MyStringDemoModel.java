@@ -7,7 +7,7 @@ import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.Stri
  * Created by fdoyle on 7/16/14.
  */
 public class MyStringDemoModel {
-    @StringFixed("A fixed string")
+    @StringFixed("Something Fixed")
     public String myFixedString;
     @StringDate
     public String myDefaultDateString;
