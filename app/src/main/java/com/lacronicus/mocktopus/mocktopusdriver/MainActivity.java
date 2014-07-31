@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lacronicus.mocktopus.core.mocktopus.Mocktopus;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyCollectionContainingModel;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model.MyModel;
@@ -53,7 +54,7 @@ public class MainActivity extends BaseActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showConfigScreen();
+                Mocktopus.showConfigScreen(MainActivity.this);
             }
         });
 

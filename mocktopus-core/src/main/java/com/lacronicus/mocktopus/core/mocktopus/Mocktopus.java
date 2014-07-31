@@ -1,5 +1,9 @@
 package com.lacronicus.mocktopus.core.mocktopus;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -10,6 +14,7 @@ import java.util.Set;
  * Created by fdoyle on 7/16/14.
  */
 public class Mocktopus {
+    public static final int CONFIG_REQUEST_CODE = 999;
 
     static Mocktopus mocktopus;
 
@@ -60,4 +65,20 @@ public class Mocktopus {
     public Set<Type> getApiSet() {
         return services.keySet();
     }
+
+    public static void showConfigScreen(Activity activity) {
+        Intent i = new Intent(activity, ConfigurationActivity.class);
+        activity.startActivityForResult(i, CONFIG_REQUEST_CODE);
+    }
+
+    public static void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CONFIG_REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    activity.recreate();
+                }
+                break;
+        }
+    }
+
 }

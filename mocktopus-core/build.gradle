@@ -25,6 +25,8 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository(url: "file://localhost/derp/myrepo")
+            pom.version = buildVersionName()
+            pom.artifactId = "mocktopus-core"
         }
     }
 }
