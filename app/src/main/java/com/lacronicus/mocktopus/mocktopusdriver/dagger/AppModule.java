@@ -7,9 +7,9 @@ import com.google.gson.Gson;
 import com.lacronicus.mocktopus.mocktopusdriver.MainActivity;
 import com.lacronicus.mocktopus.mocktopusdriver.MainApp;
 import com.lacronicus.mocktopus.mocktopusdriver.fakeservice.FakeService;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.ConfigurationActivity;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.MockInvocationHandler;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.Mocktopus;
+import com.lacronicus.mocktopus.core.mocktopus.ConfigurationActivity;
+import com.lacronicus.mocktopus.core.mocktopus.MockInvocationHandler;
+import com.lacronicus.mocktopus.core.mocktopus.Mocktopus;
 import com.lacronicus.mocktopus.mocktopusdriver.redditservice.RedditService;
 
 import javax.inject.Singleton;
@@ -21,8 +21,7 @@ import dagger.Provides;
 @Module(injects = {
         Injector.class,
         MainApp.class,
-        MainActivity.class,
-        ConfigurationActivity.class
+        MainActivity.class
 }, library = true, complete = true)
 public class AppModule {
     private final Application application;

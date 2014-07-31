@@ -1,7 +1,7 @@
 package com.lacronicus.mocktopus.mocktopusdriver.fakeservice.model;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringDate;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.annotation.string.StringFixed;
+import com.lacronicus.mocktopus.core.mocktopus.annotation.string.StringDate;
+import com.lacronicus.mocktopus.core.mocktopus.annotation.string.StringFixed;
 
 /**
  * Created by fdoyle on 7/16/14.

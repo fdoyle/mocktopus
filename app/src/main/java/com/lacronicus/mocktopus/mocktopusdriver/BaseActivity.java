@@ -1,11 +1,9 @@
 package com.lacronicus.mocktopus.mocktopusdriver;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.BaseMockingActivity;
-import com.lacronicus.mocktopus.mocktopusdriver.mocktopus.ConfigurationActivity;
+import com.lacronicus.mocktopus.core.mocktopus.BaseMockingActivity;
+import com.lacronicus.mocktopus.core.mocktopus.ConfigurationActivity;
 
 /**
  * Created by fdoyle on 7/17/14.

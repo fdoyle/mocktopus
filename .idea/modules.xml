@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mocktopus.iml" filepath="$PROJECT_DIR$/mocktopus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mocktopus-core/mocktopus-core.iml" filepath="$PROJECT_DIR$/mocktopus-core/mocktopus-core.iml" />
     </modules>
   </component>
 </project>
