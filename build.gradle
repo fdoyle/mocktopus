@@ -6,8 +6,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.github.townsfolk:gradle-release:1.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.2'
-
+        classpath 'com.github.dcendents:android-maven-plugin:1.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -16,5 +17,40 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+    }
+}
+
+apply plugin: 'release'
+
+release {
+    scm = 'git'
+    preCommitText = 'RELEASE:'
+    preTagCommitMessage = 'Pre Tag'
+    tagCommitMessage = 'New Tag'
+    failOnSnapshotDependencies = false
+    newVersionCommitMessage = 'VERSION INCREMENTED'
+}
+
+
+
+def Integer buildVersionCode() {
+    if (project.hasProperty('versionCode')) {
+        return project.properties.versionCode.toInteger()
+    } else {
+        return 1;
+    }
+}
+
+/**
+ * Returns the build version name.
+ * version needs to be in your gradle.properties. All else fails, it simply resorts to 1.0 as a version name
+ * Gradle-Release-Plugin handles all version name incrementing
+ * @return String Version Name.
+ */
+def String buildVersionName() {
+    if (project.hasProperty('version')) {
+        return project.properties.version
+    } else {
+        return "1.0";
     }
 }
