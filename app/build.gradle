@@ -30,5 +30,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.4.1'
     compile 'com.netflix.rxjava:rxjava-core:0.19.6'
     compile 'com.netflix.rxjava:rxjava-android:0.19.6'
+    compile 'com.squareup:seismic:1.0.0'
+
 
 }

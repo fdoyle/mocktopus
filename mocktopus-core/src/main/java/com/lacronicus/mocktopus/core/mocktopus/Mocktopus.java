@@ -68,6 +68,7 @@ public class Mocktopus {
 
     public static void showConfigScreen(Activity activity) {
         Intent i = new Intent(activity, ConfigurationActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         activity.startActivityForResult(i, CONFIG_REQUEST_CODE);
     }
 

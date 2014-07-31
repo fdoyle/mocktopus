@@ -14,13 +14,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
-        <Button
-            android:text="Open Config Screen"
-            android:id="@+id/open_config"
+        <TextView
+            android:text="Shake the device\nto open the config screen"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
         <TextView
             android:id="@+id/tv"

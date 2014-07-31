@@ -12,7 +12,6 @@ import com.lacronicus.mocktopus.core.R;
  * Allows the user to modify the current settings for an api
  */
 public class ConfigurationActivity extends FragmentActivity {
-
     ViewPager vp;
 
     @Override
@@ -26,14 +25,9 @@ public class ConfigurationActivity extends FragmentActivity {
         vp.setAdapter(adapter);
     }
 
-
     @Override
     public void onBackPressed() {
         setResult(RESULT_OK);
         super.onBackPressed();
-    }
-
-    public void toast(String string) {
-        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
 }
