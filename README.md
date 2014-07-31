@@ -1,6 +1,9 @@
 mocktopus
 =========
 
+v 0.5
+-----
+
 This thing is approaching usable. You can look at it now
 
 how to use
