@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.lacronicus.mocktopus.core.mocktopus.BaseMockingActivity;
-import com.lacronicus.mocktopus.core.mocktopus.ConfigurationActivity;
 import com.lacronicus.mocktopus.core.mocktopus.Mocktopus;
 
 /**
